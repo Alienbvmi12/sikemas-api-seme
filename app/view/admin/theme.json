@@ -1,0 +1,25 @@
+{
+	"link":
+	[
+		{
+			"rel": "stylesheet",
+			"href": "{{cdn_url}}skin/admin/css/bootstrap.min.css"
+		},
+		{
+			"rel": "stylesheet",
+			"href": "{{cdn_url}}skin/admin/css/plugins.css"
+		},
+		{
+			"rel": "stylesheet",
+			"href": "{{cdn_url}}skin/admin/css/main.css"
+		},
+		{
+			"rel": "stylesheet",
+			"href": "{{cdn_url}}skin/admin/css/themes.css"
+		},
+		{
+			"rel": "stylesheet",
+			"href": "{{cdn_url}}skin/admin/css/themes/sbp.css"
+		}
+	]
+}

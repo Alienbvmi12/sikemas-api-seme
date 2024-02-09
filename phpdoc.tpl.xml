@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<phpdocumentor
+  configVersion="3"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns="https://www.phpdoc.org"
+  xsi:noNamespaceSchemaLocation="data/xsd/phpdoc.xsd"
+  >
+  <title>Dapodik KW</title>
+  <paths>
+    <output>docs</output>
+    <cache>build/cache</cache>
+  </paths>
+  <version number="1.0.0">
+    <folder>1.0.0</folder>
+    <api>
+      <source dsn=".">
+        <path>index.php</path>
+        <path>app</path>
+        <path>app/config/development.php</path>
+        <path>kero</path>
+      </source>
+      <ignore hidden="true" symlinks="true">
+        <path>app/cache/**/*</path>
+        <path>app/view/**/*</path>
+        <path>skin/**/*</path>
+        <path>media/**/*</path>
+        <path>sql/**/*</path>
+        <path>assets/**/*</path>
+        <path>docs/**/*</path>
+        <path>kero/lib/cache_gen/**/*</path>
+        <path>kero/lib/fpdf/**/*</path>
+        <path>kero/lib/php-image-resize/**/*</path>
+        <path>kero/lib/phpdocx_free/**/*</path>
+        <path>kero/lib/phpexcel/**/*</path>
+        <path>kero/lib/phpmailer/**/*</path>
+        <path>kero/lib/phpoffice/**/*</path>
+        <path>kero/lib/wideimage/**/*</path>
+        <path>tests/**/*</path>
+        <path>build/**/*</path>
+        <path>var/**/*</path>
+        <path>vendor/**/*</path>
+      </ignore>
+      <extensions>
+        <extension>php</extension>
+      </extensions>
+    </api>
+  </version>
+</phpdocumentor>
