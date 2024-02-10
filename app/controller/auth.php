@@ -1,0 +1,318 @@
+<?php
+
+use PhpOffice\PhpSpreadsheet\Cell\DataType;
+
+class Auth extends JI_Controller
+{
+    private $user;
+    public function __construct()
+    {
+        parent::__construct();
+        $this->load('users_model', 'bum');
+        $this->load('warga_model', 'warga');
+        $this->user = $this->bum;
+    }
+
+    public function index()
+    {
+        echo "hello";
+    }
+
+    private function __passGen($password)
+    {
+        return password_hash($password, PASSWORD_BCRYPT);
+    }
+
+    private function __passClear($password)
+    {
+        return preg_replace('/[^a-zA-Z0-9]/', '', $password);
+    }
+    private function __genTokenMobile($user_id, $username)
+    {
+        // $this->lib("conumtext");
+        $token = '';
+        $token = md5($user_id . $username . date("Ymdhisa") . $this->__generateRandomString(5));
+        return $token;
+    }
+
+    private function __generateRandomString($length = 10)
+    {
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $randomString = '';
+
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[rand(0, strlen($characters) - 1)];
+        }
+
+        return $randomString;
+    }
+
+    private function __generateOTP($length = 6)
+    {
+        $characters = '0123456789';
+        $randomString = '';
+
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[rand(0, strlen($characters) - 1)];
+        }
+
+        return $randomString;
+    }
+
+
+    private function validateInput($input_key, $minlenght = 3)
+    {
+        $input_key = $this->input->request($input_key, '');
+        if (strlen($input_key) <= $minlenght) {
+            $this->status = 102;
+            $this->message = 'Kombinasi ' . $input_key . ' atau password tidak valid';
+            $this->__json_out(new stdClass());
+            die();
+        }
+
+        return $input_key;
+    }
+
+    public function login()
+    {
+        //init
+        $data = array();
+
+        $requestBody = file_get_contents('php://input');
+        $jsonData = json_decode($requestBody, false);
+
+        $username = $jsonData->username;
+        $password = $jsonData->password;
+
+        $res = $this->bum->auth($username);
+        if (isset($res->id)) {
+            //check whether the user is inactive
+            if (empty($res->is_active)) {
+                http_response_code(1708);
+                $this->status = 1708;
+                $this->message = 'Akun belum diaktivasi';
+                $this->__json_out($data);
+                die();
+            }
+
+            //check old password encryption, renew it
+            if (md5($password) == $res->password) {
+                $res->password = password_hash($password, PASSWORD_BCRYPT);
+                $this->bum->update($res->id, array("password" => $res->password));
+            }
+
+            //verify the oassword
+            if (!password_verify($password, $res->password)) {
+                http_response_code(1708);
+                $this->status = 1707;
+                $this->message = 'Kombinasi email dan/atau password salah';
+                $this->__json_out($data);
+                die();
+            }
+
+
+            // generate mobile token
+            $token = $this->__genTokenMobile($res->id, $username);
+
+            $this->user->insert_token(md5($token), $res->id);
+
+            $userdata = [
+                "id" => $res->id,
+                "email" => $res->email,
+                "username" => $res->username,
+                "token" => $token
+            ];
+
+            $data = $userdata;
+
+            http_response_code(200);
+            $this->status = 200;
+            $this->message = 'Success';
+            unset($res->password);
+        } else {
+            http_response_code(1709);
+            $this->status = 1709;
+            $this->message = 'Kombinasi email dan/atau password salah';
+        }
+
+        $this->__json_out($data);
+    }
+
+    public function register()
+    {
+        $data = array();
+
+        $requestBody = file_get_contents('php://input');
+        $jsonData = json_decode($requestBody, true);
+
+        $this->user->validate($jsonData, $this, 'insert', [
+            'nik' => ['required', 'max:255'],
+            'username' => ['required', 'unique', 'max:50', "unique"],
+            'email' => ['required', 'max:50', 'email', "unique"],
+            'password' => ['required', 'min:6', 'max:50'],
+            'confirm_password' => ['required']
+        ]);
+
+        if ($jsonData["password"] !== $jsonData["confirm_password"]) {
+            http_response_code(1709);
+            $this->status = 1709;
+            $this->message = 'Password tidak sama';
+            $this->__json_out($data);
+            die();
+        }
+
+        $warga = $this->warga->get_by_nik($jsonData["nik"]);
+
+        if (!isset($warga->id)) {
+            http_response_code(1709);
+            $this->status = 1709;
+            $this->message = 'NIK tidak ditemukan';
+            $this->__json_out($data);
+            die();
+        }
+
+        $otp = $this->__generateOTP();
+
+        $jsonData["warga_id"] = $warga->id;
+
+        $this->user->validate(['warga_id' => $warga->id], $this, 'insert', [
+            'warga_id' => ['required', 'unique', "as:data warga"]
+        ]);
+
+        //Mark for mysql fun
+
+        $new_user = $this->user->insert_reg([
+            "email" => $jsonData["email"],
+            "username" => $jsonData["username"],
+            "password" => $this->__passGen($jsonData["password"]),
+            "warga_id" => $jsonData["warga_id"],
+            "email_verify_token" => md5($otp)
+        ]);
+
+        //Mark end
+
+        if (!$this->send_otp($jsonData, $otp)) {
+            http_response_code(500);
+            $this->status = 500;
+            $this->message = 'Gagal mengirim email';
+            $this->__json_out($data);
+        }
+
+        http_response_code(200);
+        $this->status = 200;
+        $this->message = 'Register Success';
+        $this->__json_out([
+            "reg_id" => $new_user->id,
+            "email" => $jsonData['email'],
+            "username" => $jsonData['username']
+        ]);
+    }
+
+    public function send_otp($jsonData = array(), $otp = "", $subject = "Verifikasi Email")
+    {
+        ob_start();
+
+        $send_result = $this->send_email(
+            $jsonData["email"],
+            $jsonData["username"],
+            $subject,
+            "Halo!! ini adalah kode " . strtolower($subject) . " anda <b>$otp</b>"
+        );
+
+        ob_end_clean();
+
+        return $send_result;
+    }
+
+    public function resend_otp()
+    {
+        $requestBody = file_get_contents('php://input');
+        $jsonData = json_decode($requestBody, true);
+
+        $this->user->validate($jsonData, $this, 'insert', [
+            'username' => ['required', 'max:50'],
+            'email' => ['required', 'max:50', 'email'],
+            'reg_id' => ['required']
+        ]);
+
+        $reg_data = $this->user->findRegData($jsonData);
+
+        if(!isset($reg_data->id)){
+            $this->status = 422;
+            $this->message = 'Data not found';
+            $this->__json_out([]);
+        }
+
+        $user_id = $jsonData['reg_id'];
+        $otp = $this->__generateOTP();
+        $subject = "Verifikasi Email";
+
+        $this->user->update_reg($user_id, ["email_verify_token" => md5($otp)]);
+
+        ob_start();
+
+        $send_result = $this->send_email(
+            $jsonData["email"],
+            $jsonData["username"],
+            $subject,
+            "Halo!! ini adalah kode " . strtolower($subject) . " anda <b>$otp</b>"
+        );
+
+        ob_end_clean();
+
+        if ($send_result) {
+            $this->status = 200;
+            $this->message = 'Resend Success';
+            $this->__json_out([]);
+        }
+        else{
+            $this->status = 500;
+            $this->message = 'Internal Server Error';
+            $this->__json_out([]);
+        }
+    }
+
+    public function verify_email()
+    {
+        $data = array();
+
+        $requestBody = file_get_contents('php://input');
+        $jsonData = json_decode($requestBody, true);
+
+        $this->user->validate($jsonData, $this, 'insert', [
+            'reg_id' => ['required'],
+            'otp' => ['required', 'max:6', 'min:6'],
+        ]);
+
+        $user_reg = $this->user->validate_otp_reg($jsonData);
+
+        if (!isset($user_reg->id)) {
+            http_response_code(401);
+            $this->status = 401;
+            $this->message = 'OTP salah';
+            $this->__json_out($data);
+            die();
+        }
+
+        $user_reg->is_active = 1;
+
+        // generate mobile token
+        $token = $this->__genTokenMobile($user_reg->id, $user_reg->username);
+
+        $new_user = $this->user->activate_user(md5($token), $user_reg);
+
+        $userdata = [
+            "id" => $new_user->id,
+            "email" => $new_user->email,
+            "username" => $new_user->username,
+            "token" => $token
+        ];
+
+        $data = $userdata;
+
+        http_response_code(200);
+        $this->status = 200;
+        $this->message = 'Success';
+        $this->__json_out($data);
+    }
+}

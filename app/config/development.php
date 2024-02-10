@@ -16,7 +16,7 @@
  * Site Base URL with http:// or https:// prefix and trailing slash
  * @var string
  */
-$site = "http://".$_SERVER['HTTP_HOST']."/dapodikkw/";
+$site = "http://".$_SERVER['HTTP_HOST']."/sikemas-api/";
 /**
  * URL parse method
  *   - REQUEST_URI, suitable for Nginx
@@ -45,7 +45,7 @@ $cdn_url = '';
 $db['host']  = 'localhost';
 $db['user']  = 'root';
 $db['pass']  = '';
-$db['name']  = 'dapodik_kwdb';
+$db['name']  = 'sikemas_db';
 $db['port'] = '3306';
 $db['charset'] = 'utf8mb4';
 $db['engine'] = 'mysqli';
@@ -114,26 +114,29 @@ $semevar['fcm']->storageBucket = '';
 $semevar['fcm']->messagingSenderId = '';
 $semevar['fcm']->appId = '';
 
+//email
+$semevar['email_from'] = 'elektro1ktp@gmail.com';
+$semevar['email_reply'] = 'elektro1ktp@gmail.com';
+$semevar['email_host'] = "smtp.gmail.com";
+$semevar['email_password'] = "aiur idtd dbhg jfrl";
+$semevar['email_smtp_port'] = 465;
+
 // example
 $semevar['site_version'] = '1.0.0';
-$semevar['site_name'] = 'Dapodik KW';
-$semevar['site_title'] = 'Dapodik KW';
+$semevar['site_name'] = 'Sikemas App';
+$semevar['site_title'] = 'Sikemas App';
 $semevar['site_title_suffix'] = ' - '.$semevar['site_title'];
 $semevar['admin_site_name'] = 'Administrator';
-$semevar['admin_site_title'] = 'Admin Dapodik KW';
+$semevar['admin_site_title'] = 'Admin Sikemas App';
 $semevar['admin_site_title_suffix'] = ' - '.$semevar['admin_site_title'];
-$semevar['site_description'] = 'Dapodik KW';
+$semevar['site_description'] = 'Sikemas App';
 $semevar['site_author'] = 'cenah.co.id';
 $semevar['site_logo'] = 'media/logo.png';
 $semevar['site_logo_white'] = 'media/logo-white.png';
-$semevar['site_keyword'] = 'cenah.co.id';
-$semevar['email_from'] = 'noreply@thecloudalert.com';
-$semevar['email_reply'] = 'hi@thecloudalert.com';
+$semevar['site_keyword'] = 'sikemas-api.co';
+
 $semevar['app_name'] = $semevar['site_name'];
 $semevar['app_logo'] = 'media/logo.png';
-$semevar['company_name'] = 'PT Cipta Esensi Merenah';
-$semevar['company_alias'] = 'Cenah';
-$semevar['company_url'] = 'https://www.cenah.co.id';
 $semevar['media_pengguna'] = 'media/pengguna';
 //yayasan
 $semevar['id_yayasan'] = 1;
