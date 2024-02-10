@@ -59,27 +59,20 @@ class Auth extends JI_Controller
         return $randomString;
     }
 
-
-    private function validateInput($input_key, $minlenght = 3)
-    {
-        $input_key = $this->input->request($input_key, '');
-        if (strlen($input_key) <= $minlenght) {
-            $this->status = 102;
-            $this->message = 'Kombinasi ' . $input_key . ' atau password tidak valid';
-            $this->__json_out(new stdClass());
-            die();
-        }
-
-        return $input_key;
-    }
-
     public function login()
     {
         //init
         $data = array();
 
         $requestBody = file_get_contents('php://input');
-        $jsonData = json_decode($requestBody, false);
+        $jsonData = json_decode($requestBody, true);
+
+        $this->user->validate($jsonData, $this, 'read', [
+            'username' => ['required', 'max:50'],
+            'password' => ['required', 'min:6', 'max:50']
+        ]);
+
+        $jsonData = (object) $jsonData;
 
         $username = $jsonData->username;
         $password = $jsonData->password;
@@ -176,7 +169,7 @@ class Auth extends JI_Controller
         $jsonData["warga_id"] = $warga->id;
 
         $this->user->validate(['warga_id' => $warga->id], $this, 'insert', [
-            'warga_id' => ['required', 'unique', "as:data warga"]
+            'warga_id' => ['required']
         ]);
 
         //Mark for mysql fun
@@ -237,7 +230,8 @@ class Auth extends JI_Controller
 
         $reg_data = $this->user->findRegData($jsonData);
 
-        if(!isset($reg_data->id)){
+        if (!isset($reg_data->id)) {
+            http_response_code(422);
             $this->status = 422;
             $this->message = 'Data not found';
             $this->__json_out([]);
@@ -261,11 +255,12 @@ class Auth extends JI_Controller
         ob_end_clean();
 
         if ($send_result) {
+            http_response_code(200);
             $this->status = 200;
             $this->message = 'Resend Success';
             $this->__json_out([]);
-        }
-        else{
+        } else {
+            http_response_code(500);
             $this->status = 500;
             $this->message = 'Internal Server Error';
             $this->__json_out([]);
@@ -314,5 +309,147 @@ class Auth extends JI_Controller
         $this->status = 200;
         $this->message = 'Success';
         $this->__json_out($data);
+    }
+
+    public function request_reset_password_otp()
+    {
+        $requestBody = file_get_contents('php://input');
+        $jsonData = json_decode($requestBody, true);
+
+        $this->user->validate($jsonData, $this, 'insert', [
+            'email' => ['required', 'max:50', 'email'],
+        ]);
+
+        $user = $this->user->getByEmail($jsonData["email"]);
+
+        if (!isset($user->id)) {
+            http_response_code(422);
+            $this->status = 422;
+            $this->message = 'User tidak ditemukan';
+            $this->__json_out([]);
+        }
+
+        $user_id = $user->id;
+        $otp = $this->__generateOTP();
+        $subject = "Reset Password";
+
+        $this->user->update($user_id, ["reset_password_token" => md5($otp)]);
+
+        ob_start();
+
+        $send_result = $this->send_email(
+            $user->email,
+            $user->username,
+            $subject,
+            "Halo!! ini adalah kode " . strtolower($subject) . " anda <b>$otp</b>"
+        );
+
+        ob_end_clean();
+
+        if ($send_result) {
+            http_response_code(200);
+            $this->status = 200;
+            $this->message = 'Kode OTP untuk reset password berhasil dikirim';
+            $this->__json_out([]);
+        } else {
+            http_response_code(500);
+            $this->status = 500;
+            $this->message = 'Internal Server Error';
+            $this->__json_out([]);
+        }
+    }
+
+    public function reset_password_otp_verify()
+    {
+        $requestBody = file_get_contents('php://input');
+        $jsonData = json_decode($requestBody, true);
+
+        $this->user->validate($jsonData, $this, 'insert', [
+            'email' => ['required', 'max:50', 'email'],
+            'otp' => ['required', 'max:6', 'min:6']
+        ]);
+
+        $validate_otp = $this->user->validate_otp_reset_password($jsonData);
+
+        if (isset($validate_otp->id)) {
+            http_response_code(200);
+            $this->status = 200;
+            $this->message = 'Kode OTP berhasil diverifikasi';
+            $this->__json_out([
+                "result" => true
+            ]);
+        } else {
+            http_response_code(401);
+            $this->status = 401;
+            $this->message = 'Kode otp salah';
+            $this->__json_out([
+                "result" => false
+            ]);
+        }
+    }
+
+    public function reset_password()
+    {
+        $requestBody = file_get_contents('php://input');
+        $jsonData = json_decode($requestBody, true);
+
+        $this->user->validate($jsonData, $this, 'insert', [
+            'email' => ['required', 'max:50', 'email'],
+            'otp' => ['required', 'max:6', 'min:6'],
+            'password' => ['required', 'min:6', 'max:50'],
+            'confirm_password' => ['required']
+        ]);
+
+        if ($jsonData["password"] !== $jsonData["confirm_password"]) {
+            http_response_code(1709);
+            $this->status = 1709;
+            $this->message = 'Password tidak sama';
+            $this->__json_out([]);
+            die();
+        }
+
+        $validate_otp = $this->user->validate_otp_reset_password($jsonData);
+
+        if (isset($validate_otp->id)) {
+            $currentTimestamp = time();
+            $mysqlTimestamp = date("Y-m-d H:i:s", $currentTimestamp);
+            $this->user->update($validate_otp->id, [
+                "password" => $this->__passGen($jsonData["password"]),
+                "updated_at" => $mysqlTimestamp
+            ]);
+
+            http_response_code(200);
+            $this->status = 200;
+            $this->message = 'Berhasil merubah password!!';
+            $this->__json_out([
+                "result" => true
+            ]);
+        } else {
+            http_response_code(422);
+            $this->status = 422;
+            $this->message = 'Gagal reset password, OTP tidak valid atau User tidak ada!!';
+            $this->__json_out([
+                "result" => false
+            ]);
+        }
+    }
+
+    public function logout()
+    {
+        $requestBody = file_get_contents('php://input');
+        $jsonData = json_decode($requestBody, true);
+
+        $this->user->validate($jsonData, $this, 'insert', [
+            'token' => ['required'],
+        ]);
+
+        $result = $this->user->delete_log($jsonData["token"]);
+
+        http_response_code(200);
+        $this->status = 200;
+        $this->message = 'Logout Success';
+        $this->__json_out([
+            "result" => true
+        ]);
     }
 }

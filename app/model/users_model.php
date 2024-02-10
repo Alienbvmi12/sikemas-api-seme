@@ -6,6 +6,7 @@ register_namespace(__NAMESPACE__);
 
 use JI_Model;
 use Model;
+use stdClass;
 
 /**
  * Scoped `Front` class model for `b_user` table
@@ -75,9 +76,17 @@ class Users_Model extends JI_Model
         // $this->db->insert_token($token, $user_id);
         $reg_id = $user->id;
         unset($user->id);
+        unset($user->email_verify_token);
         $arrUser = (array) $user;
-        $this->db->insert($this->tbl, $arrUser);
-        $new_user = $this->getByEmail($user->email);
+        $check = $this->getByEmail($user->email);
+        $new_user = new stdClass();
+        if(isset($check->id)){
+            $new_user = $check;
+        }
+        else{
+            $this->db->insert($this->tbl, $arrUser);
+            $new_user = $this->getByEmail($user->email);
+        }
         $this->delete_reg($reg_id);
         $this->insert_token($token, $new_user->id);
         return $new_user;
@@ -87,6 +96,13 @@ class Users_Model extends JI_Model
         $this->db->from($this->tbl3, $this->tbl3_as);
         $this->db->where("id", $data["reg_id"], "AND", "=", 1, 0);
         $this->db->where("email_verify_token", md5($data["otp"]), "AND", "=", 0, 1);
+        return $this->db->get_first();
+    }
+
+    public function validate_otp_reset_password($data){
+        $this->db->from($this->tbl, $this->tbl_as);
+        $this->db->where("email", $data["email"], "AND", "=", 1, 0);
+        $this->db->where("reset_password_token", md5($data["otp"]), "AND", "=", 0, 1);
         return $this->db->get_first();
     }
 
@@ -110,6 +126,12 @@ class Users_Model extends JI_Model
     public function delete_reg($id){
         $this->db->where('id', $id);
         $this->db->delete($this->tbl3);
+    }
+
+    public function delete_log($token)
+    {
+        $this->db->where("token", md5($token));
+        $this->db->delete($this->tbl2);
     }
 
     public function findRegData($data){
