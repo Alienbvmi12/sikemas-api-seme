@@ -72,6 +72,12 @@ class Users_Model extends JI_Model
         ]);
     }
 
+    public function verify_token($token){
+        $this->db->from($this->tbl2, $this->tbl2_as);
+        $this->db->where("$this->tbl2_as.token", md5($token));
+        return $this->db->get_first();
+    }
+
     public function activate_user($token, $user){
         // $this->db->insert_token($token, $user_id);
         $reg_id = $user->id;
@@ -147,5 +153,9 @@ class Users_Model extends JI_Model
     {
         $sql = 'select `password` from ' . $this->tbl . ' where id = '.$id.'';
         return $this->db->query($sql);
+    }
+
+    public function getUserWarga($id){
+        return $this->db->query("call get_user_warga($id)")[0];
     }
 }

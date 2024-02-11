@@ -497,14 +497,16 @@ class JI_Model extends \SENE_Model
                             if ($u == ' ') $space++;
                         }
                         if (strlen((string)$param) === 0 or strlen((string)$param) === $space) {
-                            $data = array();
+                            $data = array("result" => false);
+                            http_response_code(400);
                             $context->status = 400;
                             $context->message = '"' . $keyAs . '" wajib diisi';
                             $context->__json_out($data);
                             die;
                         }
                     } else {
-                        $data = array();
+                        $data = array("result" => false);
+                        http_response_code(400);
                         $context->status = 400;
                         $context->message = '"' . $keyAs . '" wajib diisi';
                         $context->__json_out($data);
@@ -515,7 +517,8 @@ class JI_Model extends \SENE_Model
                 if (isset($data[$key])) {
                     if ($tmp[0] === 'max') {
                         if (strlen((string)$param) > $tmp[1]) {
-                            $data = array();
+                            $data = array("result" => false);
+                            http_response_code(400);
                             $context->status = 400;
                             $context->message = 'Panjang karakter "' . $keyAs . '" tidak boleh lebih dari ' . $tmp[1];
                             $context->__json_out($data);
@@ -524,7 +527,8 @@ class JI_Model extends \SENE_Model
                     }
                     if ($tmp[0] === 'min') {
                         if (strlen((string)$param) < $tmp[1]) {
-                            $data = array();
+                            $data = array("result" => false);
+                            http_response_code(400);
                             $context->status = 400;
                             $context->message = 'Panjang karakter "' . $keyAs . '" tidak boleh kurang dari ' . $tmp[1];
                             $context->__json_out($data);
@@ -547,7 +551,8 @@ class JI_Model extends \SENE_Model
                             }
                         }
                         if ($is_invalid) {
-                            $data = array();
+                            $data = array("result" => false);
+                            http_response_code(400);
                             $context->status = 400;
                             $context->message = '"' . $keyAs . '" bukan email atau tidak valid';
                             $context->__json_out($data);
@@ -567,7 +572,8 @@ class JI_Model extends \SENE_Model
                         }
                         $checkTbl = (int) $model->db->get()[0]->count;
                         if ($checkTbl > 0) {
-                            $data = array();
+                            $data = array("result" => false);
+                            http_response_code(400);
                             $context->status = 400;
                             $context->message = '"' . $key . '" tidak boleh sama dengan "' . $keyAs . '" yang lain';
                             $context->__json_out($data);

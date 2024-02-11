@@ -84,7 +84,7 @@ class Auth extends JI_Controller
                 http_response_code(1708);
                 $this->status = 1708;
                 $this->message = 'Akun belum diaktivasi';
-                $this->__json_out($data);
+                $this->__json_out(["result" => false]);
                 die();
             }
 
@@ -99,7 +99,7 @@ class Auth extends JI_Controller
                 http_response_code(1708);
                 $this->status = 1707;
                 $this->message = 'Kombinasi email dan/atau password salah';
-                $this->__json_out($data);
+                $this->__json_out(["result" => false]);
                 die();
             }
 
@@ -126,6 +126,7 @@ class Auth extends JI_Controller
             http_response_code(1709);
             $this->status = 1709;
             $this->message = 'Kombinasi email dan/atau password salah';
+            $data = ["result" => false];
         }
 
         $this->__json_out($data);
@@ -150,7 +151,7 @@ class Auth extends JI_Controller
             http_response_code(1709);
             $this->status = 1709;
             $this->message = 'Password tidak sama';
-            $this->__json_out($data);
+            $this->__json_out(["result" => false]);
             die();
         }
 
@@ -160,7 +161,7 @@ class Auth extends JI_Controller
             http_response_code(1709);
             $this->status = 1709;
             $this->message = 'NIK tidak ditemukan';
-            $this->__json_out($data);
+            $this->__json_out(["result" => false]);
             die();
         }
 
@@ -188,7 +189,7 @@ class Auth extends JI_Controller
             http_response_code(500);
             $this->status = 500;
             $this->message = 'Gagal mengirim email';
-            $this->__json_out($data);
+            $this->__json_out(["result" => false]);
         }
 
         http_response_code(200);
@@ -234,7 +235,7 @@ class Auth extends JI_Controller
             http_response_code(422);
             $this->status = 422;
             $this->message = 'Data not found';
-            $this->__json_out([]);
+            $this->__json_out(["result" => false]);
         }
 
         $user_id = $jsonData['reg_id'];
@@ -258,12 +259,12 @@ class Auth extends JI_Controller
             http_response_code(200);
             $this->status = 200;
             $this->message = 'Resend Success';
-            $this->__json_out([]);
+            $this->__json_out(["result" => true]);
         } else {
             http_response_code(500);
             $this->status = 500;
             $this->message = 'Internal Server Error';
-            $this->__json_out([]);
+            $this->__json_out(["result" => false]);
         }
     }
 
@@ -285,7 +286,7 @@ class Auth extends JI_Controller
             http_response_code(401);
             $this->status = 401;
             $this->message = 'OTP salah';
-            $this->__json_out($data);
+            $this->__json_out(["result" => false]);
             die();
         }
 
@@ -326,7 +327,9 @@ class Auth extends JI_Controller
             http_response_code(422);
             $this->status = 422;
             $this->message = 'User tidak ditemukan';
-            $this->__json_out([]);
+            $this->__json_out([
+                "result" => false
+            ]);
         }
 
         $user_id = $user->id;
@@ -350,12 +353,16 @@ class Auth extends JI_Controller
             http_response_code(200);
             $this->status = 200;
             $this->message = 'Kode OTP untuk reset password berhasil dikirim';
-            $this->__json_out([]);
+            $this->__json_out([
+                "result" => true
+            ]);
         } else {
             http_response_code(500);
             $this->status = 500;
             $this->message = 'Internal Server Error';
-            $this->__json_out([]);
+            $this->__json_out([
+                "result" => false
+            ]);
         }
     }
 
@@ -404,7 +411,7 @@ class Auth extends JI_Controller
             http_response_code(1709);
             $this->status = 1709;
             $this->message = 'Password tidak sama';
-            $this->__json_out([]);
+            $this->__json_out(["result" => false]);
             die();
         }
 
