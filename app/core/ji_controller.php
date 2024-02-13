@@ -9,9 +9,7 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\SMTP;
 
-require str_replace("app\core", "", __DIR__) . 'vendor\PHPMailer\src\Exception.php';
-require str_replace("app\core", "", __DIR__) . 'vendor\PHPMailer\src\PHPMailer.php';
-require str_replace("app\core", "", __DIR__) . 'vendor\PHPMailer\src\SMTP.php';
+require str_replace("app\core", "", __DIR__) . 'vendor\autoload.php';
 
 /**
  * Core class for all controller
