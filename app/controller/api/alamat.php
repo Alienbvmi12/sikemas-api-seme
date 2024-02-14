@@ -4,14 +4,14 @@ use phpFCMv1\Client;
 use phpFCMv1\Notification;
 use phpFCMv1\Recipient;
 
-class Darurat extends \JI_Controller
+class Alamat extends \JI_Controller
 {
     public function __construct()
     {
         parent::__construct();
         $this->load('users_model', 'user');
         $this->load('warga_model', 'warga');
-        $this->load('aspirasi_model', 'aspirasi');
+        $this->load('alamat_model', 'alamat');
     }
     public function index()
     {
@@ -41,11 +41,15 @@ class Darurat extends \JI_Controller
         }
     }
 
-    public function get($q = "")
+    public function search($q = "")
     {
-        $requestBody = file_get_contents('php://input');
-        $jsonData = json_decode($requestBody, true);
+        $this->isAuthorized();
 
+        $result = $this->alamat->get($q);
 
+        http_response_code(200);
+        $this->status = 200;
+        $this->message = 'get Success';
+        $this->__json_out($result);
     }
 }

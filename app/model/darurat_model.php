@@ -15,10 +15,10 @@ use Model;
  * @package Model\Front
  * @since 1.0.0
  */
-class Alamat_Model extends JI_Model
+class Darurat_Model extends JI_Model
 {
-    public $tbl = "alamat";
-    public $tbl_as = "al";
+    public $tbl = "emergencies_log";
+    public $tbl_as = "elg";
     public function __construct()
     {
         parent::__construct();
@@ -29,16 +29,9 @@ class Alamat_Model extends JI_Model
         return $this->db->insert($this->tbl, $data);
     }
 
-    public function get($q)
+    public function get()
     {
-        return $this->db->query(
-            "call get_alamat('%".
-            str_replace(".0", ".",
-            str_replace(".00", ".",
-            str_replace("no ", "no.",
-            str_replace("rw ", "rw.",
-            str_replace("rt ", "rt.", $q)))))."%')"
-        );
+        return $this->db->get();
     }
 
     public function update($id, $du)
