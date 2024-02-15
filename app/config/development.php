@@ -16,7 +16,7 @@
  * Site Base URL with http:// or https:// prefix and trailing slash
  * @var string
  */
-$site = "http://".$_SERVER['HTTP_HOST']."/sikemas-api/";
+$site = "http://".$_SERVER['HTTP_HOST']."/sikemas-api-seme/";
 /**
  * URL parse method
  *   - REQUEST_URI, suitable for Nginx
@@ -55,7 +55,7 @@ $db['enckey'] = '';
 /* == Session Configuration == */
 /* @var string */
 /****************************/
-$saltkey = 's3mEFr4';
+$saltkey = 's3mEFr4u';
 
 /********************************/
 /* == Timezone Configuration == */
@@ -120,6 +120,13 @@ $semevar['email_reply'] = 'elektro1ktp@gmail.com';
 $semevar['email_host'] = "smtp.gmail.com";
 $semevar['email_password'] = "aiur idtd dbhg jfrl";
 $semevar['email_smtp_port'] = 465;
+
+//FTP
+
+$semevar['ftp_base_url'] = "http://sikemas.rf.gd/";
+$semevar['ftp_server'] = 'ftpupload.net';
+$semevar['ftp_user'] = 'if0_35949519';
+$semevar['ftp_pass'] = 'QLZSkr0h98zpD';
 
 // example
 $semevar['site_version'] = '1.0.0';

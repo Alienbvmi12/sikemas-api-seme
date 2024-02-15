@@ -97,13 +97,13 @@ class Darurat extends \JI_Controller
                 http_response_code(500);
                 $this->status = 500;
                 $this->message = 'Internal Server Error';
-                $this->__json_out(["result" => true]);
+                $this->__json_out(["result" => false]);
             }
         } else {
             http_response_code(500);
             $this->status = 500;
             $this->message = 'Internal Server Error';
-            $this->__json_out(["result" => true]);
+            $this->__json_out(["result" => false]);
         }
     }
 

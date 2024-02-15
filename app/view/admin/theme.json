@@ -1,25 +1,9 @@
-{
-	"link":
-	[
-		{
-			"rel": "stylesheet",
-			"href": "{{cdn_url}}skin/admin/css/bootstrap.min.css"
-		},
-		{
-			"rel": "stylesheet",
-			"href": "{{cdn_url}}skin/admin/css/plugins.css"
-		},
-		{
-			"rel": "stylesheet",
-			"href": "{{cdn_url}}skin/admin/css/main.css"
-		},
-		{
-			"rel": "stylesheet",
-			"href": "{{cdn_url}}skin/admin/css/themes.css"
-		},
-		{
-			"rel": "stylesheet",
-			"href": "{{cdn_url}}skin/admin/css/themes/sbp.css"
-		}
-	]
-}
+[
+    "<link rel=\"stylesheet\" href=\"{{base_url}}skin/css/styles.css\" \/>",
+    "<link rel=\"stylesheet\" href=\"{{base_url}}skin/vendor/DataTables/datatables.min.css\"\/>",
+    "<link rel=\"stylesheet\" href=\"{{base_url}}skin/vendor/nprogress/nprogress.css\"\/>",
+    "<link rel=\"stylesheet\" href=\"https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css\">",
+    "<link href=\"https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css\" rel=\"stylesheet\" />",
+    "<link href=\"https://cdn.jsdelivr.net/npm/sweetalert2@11.9.0/dist/sweetalert2.min.css\" rel=\"stylesheet\" />"
+  ]
+  

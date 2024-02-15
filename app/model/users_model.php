@@ -67,7 +67,7 @@ class Users_Model extends JI_Model
 
     public function insert_token($token, $user_id){
         $this->db->insert($this->tbl2, [
-            "user_id" => $user_id,
+            "user_id" => intval($user_id),
             "token" => $token
         ]);
     }

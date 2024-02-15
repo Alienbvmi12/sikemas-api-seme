@@ -1,30 +1,24 @@
 <!DOCTYPE html>
-<html class="no-js" lang="en">
-	<?php $this->getThemeElement("page/html/head",$__forward); ?>
-	<body>
+<html lang="en">
+<?php $this->getThemeElement('page/html/head', $__forward) ?>
 
+<body class="bg-primary">
+    <div id="layoutAuthentication">
+        <div id="layoutAuthentication_content">
+            <main>
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-5">
+                            <?php $this->getThemeContent() ?>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+    <!-- jQuery, Bootstrap.js, jQuery plugins and Custom JS code -->
+    <?php $this->getJsFooter(); ?>
+    <?php $this->getJsReady(); ?>
+</body>
 
-		<!-- Main Container -->
-		<?php $this->getThemeContent(); ?>
-		<!-- Main Container End -->
-
-		<!-- jQuery, Bootstrap.js, jQuery plugins and Custom JS code -->
-		<?php $this->getJsFooter(); ?>
-
-		<!-- Load and execute javascript code used only in this page -->
-		<script>
-		var base_url = '<?=base_url_admin()?>';
-		var Login = function(){
-			return {
-				init: function(){
-
-				}
-			}
-		}();
-			$(document).ready(function(e){
-				<?php $this->getJsReady(); ?>
-			});
-			<?php $this->getJsContent(); ?>
-		</script>
-	</body>
 </html>

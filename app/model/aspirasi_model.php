@@ -18,7 +18,7 @@ use Model;
 class Aspirasi_Model extends JI_Model
 {
     public $tbl = "aspirasi";
-    public $tbl_as = "as";
+    public $tbl_as = "aspirant";
     public function __construct()
     {
         parent::__construct();
@@ -27,6 +27,12 @@ class Aspirasi_Model extends JI_Model
 
     public function create($data){
         return $this->db->insert($this->tbl, $data);
+    }
+
+    public function count()
+    {
+        $this->db->select_as("COUNT(*)","count",0);
+        return $this->db->get_first();
     }
 
     public function get()

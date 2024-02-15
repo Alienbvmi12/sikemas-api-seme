@@ -1,6 +1,9 @@
 [
-  "<script src=\"{{cdn_url}}skin/admin/js/vendor/jquery.min.js\"><\/script>",
-  "<script src=\"{{cdn_url}}skin/admin/js/vendor/bootstrap.min.js\"><\/script>",
-  "<script src=\"{{cdn_url}}skin/admin/js/plugins.js?v=0.0.2\"><\/script>",
-  "<script src=\"{{cdn_url}}skin/admin/js/app.js?v=0.0.1\"><\/script>"
+  "<script src=\"{{base_url}}skin/vendor/DataTables/jQuery-3.6.0/jquery-3.6.0.min.js\"><\/script>",
+  "<script src=\"https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js\" crossorigin=\"anonymous\"></script>",
+  "<script src=\"https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.3/toastr.min.js\"><\/script>",
+  "<script src=\"https://cdn.jsdelivr.net/npm/sweetalert2@11.9.0/dist/sweetalert2.all.min.js\"><\/script>",
+  "<script src=\"{{base_url}}skin/vendor/nprogress/nprogress.js\"><\/script>",
+  "<script src=\"{{base_url}}skin/vendor/DataTables/datatables.min.js\"><\/script>",
+  "<script src=\"{{base_url}}skin/js/scripts.js\"><\/script>"
 ]

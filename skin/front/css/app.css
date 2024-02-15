@@ -1,0 +1,597 @@
+/*global*/
+@font-face {
+  font-family: suez-one;
+  src: url(../fonts/SuezOne-Regular.ttf);
+}
+
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css");
+
+* {
+  font-family: 'Roboto', sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'Roboto', cursive;
+  font-weight: 900;
+}
+
+p {
+  font-size: 1.4em;
+}
+
+/*end global*/
+body {
+  background-color: #ffffff;
+}
+
+/*tentang*/
+.tentang-gambar {
+  padding: 1em 0;
+}
+
+/*end tentang*/
+
+
+.container.main-container {
+  min-height: 85vh;
+}
+
+/*top nav / top bar*/
+.top-nav {
+  background: rgba(0, 0, 0, 0.03);
+  padding: 5px 0;
+}
+
+.top-nav-text {
+  float: left;
+}
+
+.top-nav-icon-blocks {
+  float: right;
+}
+
+.top-nav-icon-blocks .icon-block {
+  display: inline-block;
+  padding: 0 10px;
+  text-align: right;
+}
+
+.top-nav-icon-blocks .icon-block p,
+.top-nav-icon-blocks .icon-block a,
+.top-nav-text p,
+.top-nav-text a {
+  font-size: 12px;
+  line-height: 26px;
+  margin: 0;
+  color: #5d5d5d;
+}
+
+.top-nav-icon-blocks .icon-block i {
+  padding-right: 6px;
+}
+
+.top-nav-icon-blocks .icon-block i {
+  font-size: 13px;
+}
+
+#topbar.container-fluid {
+  background-color: #06345B;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  height: 40px;
+  color: #fff;
+}
+
+#topbar.container-fluid p,
+#topbar.container-fluid p img {
+  display: inline;
+  max-height: 28px;
+}
+
+#topbar.container-fluid p.pu-net {
+  margin-left: 10px;
+  color: #ffca00;
+}
+
+#topbar.container-fluid p,
+#topbar.container-fluid p img {
+  display: inline;
+  max-height: 28px;
+}
+
+#topbar.container-fluid p.date {
+  font-size: 12px;
+  line-height: 28px;
+}
+
+#topbar.container-fluid p,
+#topbar.container-fluid p img {
+  display: inline;
+  max-height: 28px;
+}
+
+.facebook {
+  border: 1px solid #1A77F2;
+  background-color: #1A77F2;
+  border-radius: 63%;
+  width: 30px;
+  height: 30px;
+}
+
+.instagram {
+  border: 1px solid #BC2A8D;
+  background-color: #BC2A8D;
+  border-radius: 63%;
+  width: 30px;
+  height: 30px;
+}
+
+.youtube {
+  border: 1px solid #E04532;
+  background-color: #E04532;
+  border-radius: 63%;
+  width: 30px;
+  height: 30px;
+}
+
+/*end top nav*/
+
+/*top menu*/
+.judul {
+  font-family: suez-one;
+  font-size: 30px;
+}
+
+a.navbar-brand {
+  font-weight: bold;
+  font-family: "Times New Roman", Times, serif;
+}
+
+.navbar.navbar-default.navbar-bat {
+  border-bottom: 4px solid #E04532;
+  background-color: #0561A5;
+  border-radius: 0;
+}
+
+.navbar-default .navbar-nav>li>a {
+  color: #f5f5f5;
+}
+
+.navbar-default .navbar-nav>li>a:focus,
+.navbar-default .navbar-nav>li>a:hover {
+  color: #E04532;
+}
+
+/*end top menu*/
+
+/*breadcrumb*/
+.breadcrumb {
+  background: transparent;
+}
+
+/*end breadcrumb*/
+
+/*kartu*/
+.kartu {
+  border: 1px #acacac solid;
+  border-radius: 5px;
+  padding: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+.kartu:hover,
+.kartu:focus {
+  border-color: #3d3d3d;
+}
+
+.kartu>a:hover,
+.kartu>a:focus {
+  text-decoration: none;
+}
+
+.kartu .kartu-teks {
+  color: black;
+}
+
+.kartu .kartu-teks h3 {
+  font-size: 1.3em;
+  font-weight: bold;
+  margin: 0;
+  margin-top: 0.5em;
+  min-height: 40px;
+}
+
+.kartu .kartu-teks p {
+  font-size: 1em;
+  margin: 0;
+}
+
+.kartu-img {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 247px;
+  width: 100%;
+}
+
+/*end kartu*/
+
+/*footer menu*/
+.footer-menu {
+  background-color: #0561A5;
+  margin-top: 3em;
+  padding: 3em;
+}
+
+.footer-menu .site_description {
+  color: #f5f5f5;
+  font-size: 0.9em;
+}
+
+.footer-menu .logo-container {
+  margin: 1em 0;
+}
+
+.footer-menu .nav-pills>li>a {
+  color: white;
+}
+
+.footer-menu .nav>li>a:focus,
+.footer-menu .nav>li>a:hover {
+  text-decoration: none;
+  background-color: #23527c;
+}
+
+footer.footer-copyright {
+  border-top: 4px solid #E04532;
+  background-color: #06345B;
+  color: #f5f5f5;
+}
+
+footer.footer-copyright .copyright {
+  text-align: center;
+  line-height: 1;
+  color: #f5f5f5;
+  font-size: small;
+  margin-top: 1em;
+}
+
+/*end footer menu*/
+
+/*produk*/
+.produk-detail-main {
+  min-height: 50vh;
+}
+
+.produk-detail-main h1 {
+  font-size: 2.2em;
+  font-weight: bold;
+  margin-top: 0;
+}
+
+.produk-detail-main h5 {
+  color: #390000;
+}
+
+.produk-detail-main .harga .harga-jadi {
+  color: #ef0000;
+  font-weight: bold;
+  font-size: 1.6em;
+}
+
+.produk-detail-main .deskripsi-singkat {
+  margin: 1em 0;
+  font-size: 1.1em;
+}
+
+.btn.btn-wa {
+  background-color: green;
+  color: white;
+  font-weight: bold;
+  padding: 1em;
+  font-size: 1.2em;
+}
+
+.btn.btn-wa:hover {
+  background-color: #4dad4d;
+}
+
+.btn.btn-links {
+  background-color: green;
+  color: white;
+  font-weight: bold;
+  padding: 1em;
+  font-size: 1.2em;
+}
+
+.btn.btn-links:hover {
+  background-color: #4dad4d;
+}
+
+.btn.btn-email {
+  background-color: green;
+  color: white;
+  font-weight: bold;
+  padding: 1em;
+  font-size: 1.2em;
+}
+
+.btn.btn-email:hover {
+  background-color: #4dad4d;
+}
+
+.btn.btn-telp {
+  background-color: green;
+  color: white;
+  font-weight: bold;
+  padding: 1em;
+  font-size: 1.2em;
+}
+
+.btn.btn-telp:hover {
+  background-color: #4dad4d;
+}
+
+h2.deskripsi-judul {
+  color: #3d3e3f;
+}
+
+.product-flexslider {
+  margin: 20px 0px;
+}
+
+.carousel-inner>.item>a>img,
+.carousel-inner>.item>img,
+.img-responsive,
+.thumbnail a>img,
+.thumbnail>img {
+  display: inline-block;
+}
+
+.product-essential .product-image img {
+  height: auto;
+  width: 100%;
+  border: 1px solid #ebebeb;
+  padding: 0px;
+  margin-top: -1px;
+}
+
+.owl-item {
+  text-align: center;
+}
+
+h2.deskripsi-judul {
+  border-bottom: 1px solid #ededed;
+}
+
+/*end produk*/
+/*bottom produk detail navigation*/
+
+.container.container-bottom-nav {
+  width: 100%;
+  padding: 0;
+}
+
+.container.container-bottom-nav .col-md-6.col-prev,
+.container.container-bottom-nav .col-md-6.col-next {
+  background-size: cover;
+  background-color: #ededed;
+  padding: 0;
+}
+
+.container.container-bottom-nav .col-md-6.col-prev {
+  <?php if(isset($related_produk[0]->foto)) echo 'background-image: url("' .($related_produk[0]->foto).'")';
+  ?>
+}
+
+.container.container-bottom-nav .col-md-6.col-next {
+  <?php if(isset($related_produk[1]->foto)) echo 'background-image: url("' .($related_produk[1]->foto).'")';
+  ?>
+}
+
+.bottom-nav-content {
+  height: 350px;
+  background-color: rgba(0, 0, 0, 0.15);
+  transition: all 0.4s ease;
+  padding: 0.8em;
+  padding-top: 310px;
+  cursor: pointer;
+}
+
+.bottom-nav-content a {
+  color: white;
+  font-size: 1.2em;
+}
+
+.bottom-nav-content:hover a {
+  text-decoration: underline;
+  font-size: 1.4em;
+}
+
+.container.container-bottom-nav .col-md-6.col-next .bottom-nav-content {
+  text-align: right;
+}
+
+.bottom-nav-content:hover,
+.bottom-nav-content:focus {
+  background-color: rgba(0, 0, 0, 0.35);
+}
+
+/*end of bottom produk detail navigation*/
+/*provider*/
+.provider {
+  border: 1px #ededed solid;
+  border-radius: 0.5em;
+}
+
+.provider .judul {
+  text-align: center;
+  background-color: #ededed;
+  padding: 0.5em;
+}
+
+.provider .judul h3 {
+  margin: 0;
+  font-size: 1.3em;
+  font-weight: bold;
+}
+
+.provider .isi {
+  padding: 0.5em;
+}
+
+.provider .isi .gambar {
+  text-align: center;
+  margin-bottom: 0.5em;
+}
+
+.provider .isi p {
+  text-align: center;
+  font-weight: bold;
+}
+
+/*end provider*/
+/*richtext std */
+.std h1 {
+  font-size: 2.4em;
+}
+
+.std h2 {
+  font-size: 2.2em;
+}
+
+.std h3 {
+  font-size: 2em;
+}
+
+.std h4 {
+  font-size: 1.8em;
+}
+
+.std h5 {
+  font-size: 1.65em;
+}
+
+.std h6 {
+  font-size: 1.5em;
+}
+
+.std p {
+  font-size: 1.3em;
+  margin-bottom: 1em;
+}
+
+.std img {
+  width: 100%;
+  height: auto;
+}
+
+/* end richtext std */
+
+.navbar.navbar-default {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+}
+
+.navbar-brand,
+.navbar-nav>li>a {
+  margin-top: 0.25em;
+  font-size: 1.5em;
+}
+
+/* hero */
+.jumbotron {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.jumbotron h2 {
+  color: #f5f5f5;
+  text-shadow: 2px 2px 2px rgba(150, 150, 150, 1);
+}
+
+.jumbotron p {
+  color: #efefef;
+  text-shadow: 1px 1px 2px rgba(150, 150, 150, 1);
+}
+
+/*three keypoint*/
+.tkp_container {
+  padding: 1em;
+}
+
+.tkp_title {
+  text-align: center;
+  font-size: 3em;
+  margin-bottom: 0.75em;
+}
+
+.tkp_container p {
+  text-align: center;
+}
+
+/** responsive **/
+@media only screen (min-width: 1024px) {
+  .row.container_utama {
+    min-height: 50vh;
+  }
+}
+
+@media only screen (min-width: 768px) {
+  .row.container_utama {
+    min-height: 30vh;
+  }
+}
+
+/** end responsive **/
+
+.teks-kecil {
+  font-size: smaller;
+}
+
+.teks-abu {
+  color: #acacac;
+}
+
+.row.row-halaman h1 {
+  margin-top: 0;
+}
+
+.dropdown-menu {
+  font-size: 1.5em;
+}
+
+/* nprogress */
+#nprogress .bar {
+  background: #e90000;
+}
+
+#nprogress .peg {
+  box-shadow: 0 0 10px #e90000, 0 0 5px #e90000;
+}
+
+#nprogress .spinner-icon {
+  border-top-color: #e90000;
+  border-left-color: #e90000;
+}
+
+.bootstrap-growl p {
+  font-size: 1em;
+}
+
+.form-group.form-actions {
+  border-top: 1px #ededed dashed;
+  margin: 0;
+  padding: 15px;
+}
+
+.btn-group-vertical .btn {
+  text-align: left;
+}

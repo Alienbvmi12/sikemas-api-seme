@@ -25,6 +25,12 @@ class Warga_Model extends JI_Model
         $this->db->from($this->tbl, $this->tbl_as);
     }
 
+    public function count()
+    {
+        $this->db->select_as("COUNT(*)","count",0);
+        return $this->db->get_first();
+    }
+
     public function get()
     {
         return $this->db->get();

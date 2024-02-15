@@ -113,6 +113,7 @@ class Auth extends JI_Controller
                 "id" => $res->id,
                 "email" => $res->email,
                 "username" => $res->username,
+                "profile" => $res->profile,
                 "token" => $token
             ];
 
@@ -301,6 +302,7 @@ class Auth extends JI_Controller
             "id" => $new_user->id,
             "email" => $new_user->email,
             "username" => $new_user->username,
+            "profile" => $new_user->profile,
             "token" => $token
         ];
 

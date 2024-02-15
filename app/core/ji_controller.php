@@ -43,7 +43,7 @@ class JI_Controller extends SENE_Controller
      * @param  mixed $dt input object or array
      * @return string     sting json formatted with its header
      */
-    public function __json_out($dt)
+    public function __json_out($dt, $addon = [])
     {
         $this->lib('sene_json_engine', 'sene_json');
         $data = array();
@@ -52,6 +52,9 @@ class JI_Controller extends SENE_Controller
         }
         $data["status"]  = (int) $this->status;
         $data["message"] = $this->message;
+        foreach($addon as $key => $value){
+            $data[$key] = $value;
+        }
         $data["data"]  = $dt;
         $this->sene_json->out($data);
         die();
