@@ -128,6 +128,18 @@ class Warga extends JI_Controller
             return;
         }
         $input = $_POST;
+        $this->warga->validate($input, $this, 'insert', [
+            'nik' => ['required', "min:16", "max:20", "min:16"],
+            'nama' => ['required', "max:255"],
+            'phone' => ['required', "min:9", "max:13"],
+            'tempat_lahir' => ['required', "max:50"],
+            'tanggal_lahir' => ['required'],
+            'kelamin' => ['required'],
+            'kewarganegaraan' => ['required'],
+            'pekerjaan' => ['required', "max:255"],
+            'posisi_id' => ['required'],
+            'alamat_id' => ['required'],
+        ]);
         if ($input['nama'] == "") {
             $this->status = 400;
             $this->message = 'nama required!!';
@@ -160,6 +172,10 @@ class Warga extends JI_Controller
             //     $this->message = 'Timeout when uploading file';
             //     $this->__json_out([]);
             // }
+        } else {
+            $this->status = 401;
+            $this->message = 'Foto wajib diisi!!';
+            $this->__json_out(["status" => false]);
         }
         $input["foto"] = "storage/" . $image_name;
         $res = $this->warga->create($input);
@@ -179,13 +195,26 @@ class Warga extends JI_Controller
         }
         $input = $_POST;
         $id = $input['id'];
+        $this->warga->validate($input, $this, 'insert', [
+            'id' => ['required'],
+            'nik' => ['required', "min:16", "max:20", "min:16"],
+            'nama' => ['required', "max:255"],
+            'phone' => ['required', "min:9", "max:13"],
+            'tempat_lahir' => ['required', "max:50"],
+            'tanggal_lahir' => ['required'],
+            'kelamin' => ['required'],
+            'kewarganegaraan' => ['required'],
+            'pekerjaan' => ['required', "max:255"],
+            'posisi_id' => ['required'],
+            'alamat_id' => ['required'],
+        ]);
         if ($id == "" or $id == 0) {
             $this->status = 400;
             $this->message = 'id required!!';
             $this->__json_out([]);
             return;
         }
-        if (!isset($input['name'])) {
+        if (!isset($input['nama'])) {
             $this->status = 400;
             $this->message = 'name required!!';
             $this->__json_out([]);
@@ -198,61 +227,40 @@ class Warga extends JI_Controller
             $this->__json_out([]);
             return;
         }
-        $name_slug = $input["name"];
-        if (count($_FILES) > 0 or isset($_FILES['image'])) {
-            $conn = $this->__connect_to_ftp();
-            if ($conn == false) {
-                $this->status = 408;
-                $this->message = 'FTP Connection Unstable';
-                $this->__json_out([]);
-                return;
-            }
-            $file = $_FILES["image"];
+        $name_slug = $input["nama"];
+        if (count($_FILES) > 0 and $_FILES['foto']['name'] != "") {
+            $file = $_FILES["foto"];
             if (!$this->__validate_image_format($file)) {
                 return;
             }
             $name_slug = $this->slugify($name_slug) . "-" . date("Ymdhis");
             $splited_filename = explode(".", basename($file["name"]));
             $name_slug = $name_slug . "." . end($splited_filename);
-            if (!$this->__upload_to_ftp($conn, $file, $name_slug)) {
-                $this->status = 408;
-                $this->message = 'Timeout when uploading file';
-                $this->__json_out([]);
-                return;
-            }
-            if ($input["image_name"] !== "-") {
-                if (!$this->__delete_from_ftp($conn, $input["image_name"])) {
-                    $this->status = 408;
-                    $this->message = 'Timeout when processing file';
-                    $this->__json_out([]);
-                    return;
-                }
-            }
         }
-        $du = [
-            "name" => $input["name"]
-        ];
-        if (count($_FILES) > 0 or isset($_FILES['image'])) {
-            $du["image"] = $name_slug;
+        if (count($_FILES) > 0 or isset($_FILES['foto'])) {
+            $dirr = str_replace("app\controller\api_admin", "storage\\", __DIR__) . $name_slug;
+            move_uploaded_file($file['tmp_name'], $dirr);
+            $input["foto"] = "storage/" . $name_slug;
         }
-        $res = $this->bm->update($id, $du);
+        unset($input["image_name"]);
+        $res = $this->warga->update($id, $input);
         $this->status = 200;
         $this->message = 'Update success';
         $this->__json_out($res);
     }
-    // public function delete($id)
-    // {
-    //     $dt = $this->__init();
-    //     $data = array();
-    //     if (!$this->admin_login) {
-    //         $this->status = 401;
-    //         $this->message = 'Login first please!!';
-    //         $this->__json_out($data);
-    //         return;
-    //     }
-    //     $res = $this->bm->delete($id);
-    //     $this->status = 200;
-    //     $this->message = "Success";
-    //     $this->__json_out($res);
-    // }
+    public function delete($id)
+    {
+        $dt = $this->__init();
+        $data = array();
+        if (!$this->admin_login) {
+            $this->status = 401;
+            $this->message = 'Login first please!!';
+            $this->__json_out($data);
+            return;
+        }
+        $res = $this->warga->delete($id);
+        $this->status = 200;
+        $this->message = "Success";
+        $this->__json_out($res);
+    }
 }

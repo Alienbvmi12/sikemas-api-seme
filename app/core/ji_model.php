@@ -564,7 +564,8 @@ class JI_Model extends \SENE_Model
                         if ($purpose === 'update') {
                             $sql = "select count(*) as count from {$model->tbl} where $key='$param' and id!='$data[id]'";
                             $model->db->select_as("count(*)", "count");
-                            $model->db->where($key, $param, 'AND', '!=');
+                            $model->db->where($key, $param, 'AND', '=');
+                            $model->db->where("id", $data['id'], 'AND', '!=');
                         } else {
                             $sql = "select count(*) as count from {$model->tbl} where $key='$param'";
                             $model->db->select_as("count(*)", "count");

@@ -24,6 +24,8 @@ class Users_Model extends JI_Model
     public $tbl2_as = "log";
     public $tbl3 = "register";
     public $tbl3_as = "reg";
+    public $tbl4 = "warga";
+    public $tbl4_as = "warga";
     public function __construct()
     {
         parent::__construct();
@@ -41,7 +43,17 @@ class Users_Model extends JI_Model
 
     public function getByEmail($email)
     {
+        $this->db->select_as("$this->tbl_as.id","id",0);
+        $this->db->select_as("$this->tbl_as.email","email",0);
+        $this->db->select_as("$this->tbl_as.username","username",0);
+        $this->db->select_as("$this->tbl_as.password","password",0);
+        $this->db->select_as("$this->tbl_as.is_active","is_active",0);
+        $this->db->select_as("$this->tbl4_as.foto","foto",0);
+
         $this->db->from($this->tbl, $this->tbl_as);
+
+        $this->db->join($this->tbl4, $this->tbl4_as, 'id', $this->tbl_as, 'warga_id', 'left');
+
         $this->db->where("email", $email);
         return $this->db->get_first();
     }
@@ -60,8 +72,18 @@ class Users_Model extends JI_Model
 
     public function auth($username)
     {
+        $this->db->select_as("$this->tbl_as.id","id",0);
+        $this->db->select_as("$this->tbl_as.email","email",0);
+        $this->db->select_as("$this->tbl_as.username","username",0);
+        $this->db->select_as("$this->tbl_as.password","password",0);
+        $this->db->select_as("$this->tbl_as.is_active","is_active",0);
+        $this->db->select_as("$this->tbl4_as.foto","foto",0);
+
         $this->db->where("$this->tbl_as.email", $username, "OR", "=", 1, 0);
         $this->db->where("$this->tbl_as.username", $username, "OR", "=", 0, 1);
+
+        $this->db->join($this->tbl4, $this->tbl4_as, 'id', $this->tbl_as, 'warga_id', 'left');
+
         return $this->db->get_first();
     }
 

@@ -15,25 +15,19 @@ use Model;
  * @package Model\Front
  * @since 1.0.0
  */
-class Warga_Model extends JI_Model
+class User_Model extends JI_Model
 {
-    public $tbl = "warga";
-    public $tbl_as = "wa";
-    public $tbl2 = "posisi";
-    public $tbl2_as = "posi";
+    public $tbl = "users";
+    public $tbl_as = "ussr";
+    public $tbl2 = "warga";
+    public $tbl2_as = "wrg";
     public $tbl3 = "alamat";
     public $tbl3_as = "alam";
     public $table_columns = [
         "id",
-        "foto",
-        "nik",
-        "nama",
-        "phone",
-        "tempat_lahir",
-        "kelamin",
-        "kewarganegaraan",
-        "pekerjaan",
-        "posisi",
+        "username",
+        "email",
+        "warga",
         "id"
     ];
     public function __construct()
@@ -49,34 +43,41 @@ class Warga_Model extends JI_Model
     private function filter_keyword($keyword)
     {
         if (strlen($keyword) > 0) {
-            $this->db->where("$this->tbl_as.nik", $keyword, "OR", "%like%", 1, 0);
-            $this->db->where("$this->tbl_as.phone", $keyword, "OR", "%like%", 0, 0);
-            $this->db->where("$this->tbl_as.tempat_lahir", $keyword, "OR", "%like%", 0, 0);
-            $this->db->where("$this->tbl_as.nama", $keyword, "AND", "%like%", 0, 1);
+            $this->db->where("$this->tbl_as.idk", $keyword, "OR", "%like%", 1, 0);
+            $this->db->where("$this->tbl_as.email", $keyword, "OR", "%like%", 0, 0);
+            $this->db->where("$this->tbl_as.username", $keyword, "OR", "%like%", 0, 0);
+            $this->db->where("$this->tbl_as.created_at", $keyword, "OR", "%like%", 0, 0);
+            $this->db->where("$this->tbl2_as.nama", $keyword, "OR", "%like%", 0, 0);
+            $this->db->where("$this->tbl2_as.telepon", $keyword, "OR", "%like%", 0, 0);
+            $this->db->where("$this->tbl2_as.no_rumah", $keyword, "OR", "%like%", 0, 1);
         }
         return $this;
     }
 
     public function read($search, $start, $length, $column, $dir){
         $this->db->select_as("$this->tbl_as.id","id",0);
-        $this->db->select_as("$this->tbl_as.foto","foto",0);
-        $this->db->select_as("$this->tbl_as.nik","nik",0);
-        $this->db->select_as("$this->tbl_as.nama","nama",0);
-        $this->db->select_as("$this->tbl_as.phone","phone",0);
-        $this->db->select_as("CONCAT($this->tbl_as.tempat_lahir, ', ', $this->tbl_as.tanggal_lahir)","ttl",0);
-        $this->db->select_as("$this->tbl_as.kelamin","kelamin",0);
-        $this->db->select_as("$this->tbl_as.kewarganegaraan","kewarganegaraan",0);
-        $this->db->select_as("$this->tbl_as.pekerjaan","pekerjaan",0);
-        $this->db->select_as("$this->tbl2_as.posisi","posisi",0);
+        $this->db->select_as("$this->tbl_as.username","username",0);
+        $this->db->select_as("$this->tbl_as.email","email",0);
         $this->db->select_as("concat(
-            $this->tbl3_as.no_rumah, 
-            \", RT.\",
-            $this->tbl3_as.rt, \". \",
-        	$this->tbl3_as.kode_pos
-        )","alamat",0);
+            'ID : ',
+            $this->tbl2_as.id,
+            '<br>',
+            'Nama : ',
+            $this->tbl2_as.nama,
+            '<br>',
+            'Telepon : ',
+            $this->tbl2_as.phone,
+            '<br>',
+            concat(
+                $this->tbl3_as.no_rumah,
+                ', RT.',
+                $this->tbl3_as.rt
+            )
+        )","warga",0);
+        $this->db->select_as("$this->tbl_as.created_at","created_at",0);
 
-        $this->db->join($this->tbl2, $this->tbl2_as, 'id', $this->tbl_as, 'posisi_id', 'left');
-        $this->db->join($this->tbl3, $this->tbl3_as, 'id', $this->tbl_as, 'alamat_id', 'left');
+        $this->db->join($this->tbl2, $this->tbl2_as, 'id', $this->tbl_as, 'warga_id', 'left');
+        $this->db->join($this->tbl3, $this->tbl3_as, 'id', $this->tbl2_as, 'alamat_id', 'left');
 
         $this->filter_keyword($search);
 
@@ -89,7 +90,7 @@ class Warga_Model extends JI_Model
     public function count($q)
     {
         $this->db->from($this->tbl, $this->tbl_as);
-        $this->db->select_as("COUNT(*)","total",0);
+        $this->db->select_as("COUNT(*)","count",0);
         $this->filter_keyword($q);
         return $this->db->get_first();
     }

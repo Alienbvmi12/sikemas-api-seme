@@ -38,8 +38,7 @@ class Darurat extends \JI_Controller
             $this->message = 'Token Invalid';
             $this->__json_out(["result" => false]);
             die();
-        }
-        else{
+        } else {
             return $token_verify->user_id;
         }
     }
@@ -53,19 +52,11 @@ class Darurat extends \JI_Controller
         $this->user->validate($jsonData, $this, 'read', [
             'event' => ['required', 'max:50'],
             'option' => ['required'],
-            'location' => ['required'],
+            'id' => ['required'],
             'nama' => ['required'],
         ]);
 
         $to_fill = "";
-
-        if ($jsonData['option'] == "0") {
-            $jsonData['location'] = "titik " . $jsonData['location'];
-        } else {
-            $this->user->validate($jsonData, $this, 'read', [
-                'id' => ['required']
-            ]);
-        }
 
         if ($jsonData['nama'] != "-") {
             $to_fill = ", kediaman " . $jsonData['nama'];
@@ -74,19 +65,11 @@ class Darurat extends \JI_Controller
         $result = $this->sendNotificationToTopic("DARURAT", "Tengah terjadi " . strtoupper($jsonData['event']) . " di " . $jsonData['location'] . $to_fill . ". Semua orang yang berada disekitar lokasi diharapkan untuk membantu/menolong");
 
         if (gettype($result) == "boolean") {
-            if ($jsonData['option'] == "0") {
-                $this->darurat->create([
-                    "event" => $jsonData['event'],
-                    "lokasi" => $jsonData['location'],
-                    "user_id" => $user_id
-                ]);
-            } else {
-                $this->darurat->create([
-                    "event" => $jsonData['event'],
-                    "alamat_id" => $jsonData['id'],
-                    "user_id" => $user_id
-                ]);
-            }
+            $this->darurat->create([
+                "event" => $jsonData['event'],
+                "alamat_id" => $jsonData['id'],
+                "user_id" => $user_id
+            ]);
 
             if ($result) {
                 http_response_code(200);

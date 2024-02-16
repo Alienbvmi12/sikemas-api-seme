@@ -24,7 +24,7 @@
     // const ftp_base_url = "<?= $this->config->semevar->ftp_base_url ?>";
     let logTable;
     $(document).ready(function(e) {
-        const requestUrl = "<?= base_url() ?>api_admin/warga/read/";
+        const requestUrl = "<?= base_url() ?>api_admin/alamat/read/";
         logTable = $('#main_table').DataTable({
             serverSide: true,
             dom: 'lf<"create-container">rti<"d-flex justify-content-end actions mb-2">p',
@@ -40,68 +40,26 @@
                     title: 'ID'
                 },
                 {
-                    data: 'foto',
-                    title: 'Foto',
+                    data: 'rt',
+                    title: 'RT',
                     render: function(data, type, row) {
-                        if (data == "") {
-                            return "-";
-                        } else {
-                            if (!data.includes("http")) {
-                                data = base_url + data;
-                            }
-                            return '<a href="' + data + '"><img src="' + data + '" style="width: 100px"></a>';
+                        var anis = "";
+                        if(data > 9){
+                            anis = "0"
                         }
+                        else{
+                            anis = "00"
+                        }
+                        return "RT." + anis + data
                     }
                 },
                 {
-                    data: 'nik',
-                    title: 'NIK'
+                    data: 'no_rumah',
+                    title: 'Nomor Rumah'
                 },
                 {
-                    data: 'nama',
-                    title: 'Nama'
-                },
-                {
-                    data: 'phone',
-                    title: 'Nomor Telepon'
-                },
-                {
-                    data: 'ttl',
-                    title: 'Tempat Tanggal Lahir'
-                },
-                {
-                    data: 'kelamin',
-                    title: 'Kelamin',
-                    render: function(data, type, row) {
-                        if (data == 0) {
-                            return "Perempuan";
-                        } else {
-                            return 'Laki-Laki';
-                        }
-                    }
-                },
-                {
-                    data: 'kewarganegaraan',
-                    title: 'Kewarganegaraan',
-                    render: function(data, type, row) {
-                        if (data == 0) {
-                            return "WNA";
-                        } else {
-                            return 'WNI';
-                        }
-                    }
-                },
-                {
-                    data: 'pekerjaan',
-                    title: 'Pekerjaan'
-                },
-                {
-                    data: 'posisi',
-                    title: 'Posisi Dalam Masyarakat'
-                },
-                {
-                    data: 'alamat',
-                    title: 'Alamat'
+                    data: 'kode_pos',
+                    title: 'Kode Pos'
                 },
                 {
                     defaultContent: `
@@ -138,43 +96,13 @@
         NProgress.start();
         if (type === "edit") {
             toedit_id = row.querySelectorAll("td")[0].innerText;
-            $.ajax({
-                url: base_url + "api_admin/warga/getById/" + toedit_id + "/",
-                type: 'GET',
-                contentType: false,
-                processData: false,
-                success: function(response) {
-                    $("#nik").val(response.data.nik);
-                    $("#nama").val(response.data.nama);
-                    $("#phone").val(response.data.phone);
-                    $("#tempat_lahir").val(response.data.tempat_lahir);
-                    $("#tanggal_lahir").val(response.data.tanggal_lahir);
-                    $("#kelamin").val(response.data.kelamin);
-                    $("#kewarganegaraan").val(response.data.kewarganegaraan);
-                    $("#pekerjaan").val(response.data.pekerjaan);
-                    $("#posisi_id").val(response.data.posisi_id);
-                    $("#alamat_id").val(response.data.alamat_id);
-                    NProgress.done();
-                },
-                error: function(xhr, status, error) {
-                    toastr["error"](error, "Error");
-                    NProgress.done();
-                }
-            });
+            $("#rt").val(row.querySelectorAll("td")[1].innerText.split(".")[1]);
+            $("#no_rumah").val(row.querySelectorAll("td")[2].innerText);
+            $("#kode_pos").val(row.querySelectorAll("td")[3].innerText);
         } else {
-            $("#nik").val("");
-            $("#nama").val("");
-            $("#phone").val("");
-            $("#tempat_lahir").val("");
-            $("#tanggal_lahir").val("");
-            $("#kelamin").val("");
-            $("#kewarganegaraan").val("");
-            $("#pekerjaan").val("");
-            $("#posisi_id").val("");
-            $("#alamat_id").val("");
-            document.getElementById("foto").files = {
-                length: 0
-            };
+            $("#rt").val("");
+            $("#no_rumah").val("");
+            $("#kode_pos").val("");
         }
     }
 
@@ -182,17 +110,10 @@
         var form = document.getElementById("editor-form")
         let formData = new FormData(form);
         formData.append("id", toedit_id);
-        formData.append("image_name", image_name);
-        // formData.append("id", toedit_id);
-        // formData.append("name", $("#name").val());
-        if (Array.from(document.querySelector("#foto").files).length > 0) {
-            formData.append("image", document.querySelector("#foto").files[0]);
-            toastr["info"]("Image upload in progress, please wait", "Info");
-        }
         // formData.append("image_name", image_name);
         NProgress.start();
         $.ajax({
-            url: base_url + "api_admin/warga/update/",
+            url: base_url + "api_admin/alamat/update/",
             type: 'POST',
             data: formData,
             contentType: false,
@@ -235,7 +156,7 @@
             if (result.isConfirmed) {
                 NProgress.start();
                 $.ajax({
-                    url: base_url + "api_admin/warga/delete/" + id + "/",
+                    url: base_url + "api_admin/alamat/delete/" + id + "/",
                     type: 'DELETE',
                     contentType: 'application/json',
                     success: function(response) {
@@ -260,13 +181,9 @@
     function create() {
         var form = document.getElementById("editor-form")
         let formData = new FormData(form);
-        if (Array.from(document.querySelector("#foto").files).length > 0) {
-            formData.append("foto", document.querySelector("#foto").files[0]);
-            toastr["info"]("Image upload in progress, please wait", "Info");
-        }
         NProgress.start();
         $.ajax({
-            url: base_url + "api_admin/warga/create/",
+            url: base_url + "api_admin/alamat/create/",
             type: 'POST',
             data: formData,
             contentType: false,
