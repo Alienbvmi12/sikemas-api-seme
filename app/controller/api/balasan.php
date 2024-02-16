@@ -51,17 +51,9 @@ class Balasan extends \JI_Controller
 
         $result = $this->balasan->get($id);
 
-        if (count($result) > 0) {
-            http_response_code(200);
-            $this->status = 200;
-            $this->message = 'get Success';
-            $this->__json_out($result);
-        }
-        else{
-            http_response_code(500);
-            $this->status = 500;
-            $this->message = 'Internal Server Error';
-            $this->__json_out(["result" => false]);
-        }
+        http_response_code(200);
+        $this->status = 200;
+        $this->message = 'get Success';
+        $this->__json_out($result);
     }
 }

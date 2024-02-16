@@ -59,7 +59,7 @@ class Aspirasi extends \JI_Controller
 
         $this->user->validate($jsonData, $this, 'read', [
             'id' => ['required'],
-            'perihal' => ['required', 'min:5', 'max:50'],
+            'perihal' => ['required', 'max:50'],
             'pesan' => ['required', 'min:5']
         ]);
 
