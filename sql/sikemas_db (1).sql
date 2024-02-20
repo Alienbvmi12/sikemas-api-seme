@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 16, 2024 at 06:12 PM
+-- Generation Time: Feb 20, 2024 at 04:43 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -182,7 +182,8 @@ INSERT INTO `aspirasi` (`id`, `user_id`, `perihal`, `pesan`, `created_at`, `upda
 (2, 26, 'gjuufufut', 'xhcudfududud', '2024-02-12 15:36:27', NULL),
 (4, 26, 'Halo saya ingin melapora', 'Pak rt 06 sepertinya banyak uang walau tak bekerja, apakah dia ngepet? kalo ngepet hayu atuh gebugin', '2024-02-16 11:35:26', NULL),
 (5, 26, 'Aku sayang kamu', 'Aku suka sama janda sebelah sejak dulu kala', '2024-02-16 11:36:53', NULL),
-(7, 26, 'healod', 'tesddt', '2024-02-16 16:55:37', NULL);
+(7, 26, 'healod', 'tesddt', '2024-02-16 16:55:37', NULL),
+(18, 29, 'Test', 'Kaushfbsf csc sf sc cssc', '2024-02-16 17:44:46', NULL);
 
 -- --------------------------------------------------------
 
@@ -218,7 +219,7 @@ CREATE TABLE `emergencies_log` (
   `id` int(10) UNSIGNED NOT NULL,
   `event` varchar(255) NOT NULL,
   `alamat_id` int(10) UNSIGNED DEFAULT NULL,
-  `user_id` int(10) UNSIGNED NOT NULL,
+  `user_id` int(10) UNSIGNED DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -234,7 +235,9 @@ INSERT INTO `emergencies_log` (`id`, `event`, `alamat_id`, `user_id`, `created_a
 (12, 'Pencurian', 10, 26, '2024-02-16 12:40:21'),
 (13, 'Pencurian', 12, 26, '2024-02-16 12:41:19'),
 (14, 'Pencurian', 12, 26, '2024-02-16 12:41:35'),
-(15, 'Pencurian', 10, 27, '2024-02-16 15:08:59');
+(16, 'Pencurian', 9, NULL, '2024-02-20 13:45:53'),
+(17, 'Kebakaran', 9, 31, '2024-02-20 14:47:12'),
+(18, 'Kebakaran', 2, 31, '2024-02-20 14:47:38');
 
 -- --------------------------------------------------------
 
@@ -310,7 +313,8 @@ INSERT INTO `login` (`id`, `user_id`, `token`, `created_at`, `expired_at`) VALUE
 (29, 26, 'fc47ec1cc4b237d1c699c7593e5b600c', '2024-02-12 12:17:22', NULL),
 (51, 26, '72ded909c03f98ca49d643cb8cd8ea1f', '2024-02-16 12:35:45', NULL),
 (56, 26, 'fff07efb9f9cca364efffe05644ce98a', '2024-02-16 16:43:25', NULL),
-(65, 29, '94888f77c08ad369bf75cf05e44759cb', '2024-02-16 17:10:28', NULL);
+(65, 29, '94888f77c08ad369bf75cf05e44759cb', '2024-02-16 17:10:28', NULL),
+(66, 26, '9a13fc9ed704f18eebdd962c5887155b', '2024-02-20 13:06:02', NULL);
 
 --
 -- Triggers `login`
@@ -336,7 +340,7 @@ DELIMITER ;
 
 CREATE TABLE `log_history` (
   `id` int(10) UNSIGNED NOT NULL,
-  `user_id` int(10) UNSIGNED NOT NULL,
+  `user_id` int(10) UNSIGNED DEFAULT NULL,
   `action` tinyint(1) UNSIGNED NOT NULL COMMENT '1 for login, 0 for logout',
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -347,10 +351,6 @@ CREATE TABLE `log_history` (
 
 INSERT INTO `log_history` (`id`, `user_id`, `action`, `created_at`) VALUES
 (1, 26, 0, '2024-02-16 14:44:27'),
-(2, 27, 1, '2024-02-16 14:44:43'),
-(3, 27, 0, '2024-02-16 14:45:06'),
-(4, 27, 1, '2024-02-16 14:45:14'),
-(5, 27, 0, '2024-02-16 16:42:26'),
 (6, 26, 1, '2024-02-16 16:43:25'),
 (7, 26, 1, '2024-02-16 16:44:46'),
 (8, 26, 0, '2024-02-16 16:44:49'),
@@ -368,7 +368,19 @@ INSERT INTO `log_history` (`id`, `user_id`, `action`, `created_at`) VALUES
 (20, 29, 0, '2024-02-16 17:00:12'),
 (21, 29, 1, '2024-02-16 17:00:19'),
 (22, 29, 0, '2024-02-16 17:10:20'),
-(23, 29, 1, '2024-02-16 17:10:28');
+(23, 29, 1, '2024-02-16 17:10:28'),
+(24, 26, 1, '2024-02-20 13:06:02'),
+(25, 26, 1, '2024-02-20 13:28:54'),
+(26, 26, 0, '2024-02-20 13:29:05'),
+(27, 26, 1, '2024-02-20 13:31:44'),
+(28, 26, 0, '2024-02-20 13:31:47'),
+(29, NULL, 1, '2024-02-20 13:44:36'),
+(30, 24, 1, '2024-02-20 14:10:18'),
+(31, 24, 0, '2024-02-20 14:10:32'),
+(32, 31, 1, '2024-02-20 14:45:42'),
+(33, 31, 0, '2024-02-20 14:45:47'),
+(34, 31, 1, '2024-02-20 14:46:53'),
+(35, 31, 0, '2024-02-20 14:49:24');
 
 -- --------------------------------------------------------
 
@@ -446,10 +458,10 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `email`, `username`, `password`, `created_at`, `updated_at`, `is_active`, `fcm_token`, `reset_password_token`, `warga_id`) VALUES
 (1, 'email@example.com', 'user', '$2y$10$pN/kjcg0YQKqbRl7Yr5bXe9OMQu21mH0Z5QwI5C3RzVZqVvTkh8H.', '2024-02-09 14:45:39', NULL, 0, NULL, NULL, 2),
-(24, 'editdbrkntd12@gmail.com', 'Rayhana', '$2y$10$ClhADd1jr.z6FRYGS2c/0u3TUSHgEgywD8Rumu7pjuo.cwwXHtEbK', '2024-02-10 07:45:19', '2024-02-10 04:26:13', 1, NULL, '85c10e7cff2e692c05b862ef6481f55e', 1),
-(26, 'elektro1ktp@gmail.com', 'ViviD5.5', '$2y$10$NCjVTlzghCyDT/QPC9.0IueKUNrb6.SS67A9iPHItwdF62fMHDsSG', '2024-02-10 10:48:25', '2024-02-14 20:54:13', 1, NULL, '9969209db9593bfe31539af871660315', 1),
-(27, 'rayfathur2006@gmail.com', 'Alien_bvmi12', '$2y$10$JNfkMcJc/mWG2EIkQAw5fecY9yMSRiNvxyhDpmJf51eSs4vQeQVxm', '2024-02-11 12:03:56', NULL, 1, NULL, NULL, 5),
-(29, 'memen@cenah.co.id', 'memen', '$2y$10$LY1bytJe6.dlC7elOMVOoewhl1w9mFOUk/JQRy3jFtNYUB7vw6G/W', '2024-02-16 16:51:39', NULL, 1, NULL, NULL, 3);
+(24, 'editdbrkntd12@gmail.com', 'Rayhana', '$2y$10$CfHZDeETG2I2CKWQHbaJKuPa30McGkP/maO90peVMTLBpy2dHMzoO', '2024-02-10 07:45:19', '2024-02-20 08:10:10', 1, NULL, 'fa005556e576a69772d155a4eb4d0862', 4),
+(26, 'elektro1ktp@gmail.com', 'ViviD5.5', '$2y$10$0PMafIXJ6mmBt3v5Iss6ceuLY0i80IwvDkpZWCQzwVCz.2v5N1e5K', '2024-02-10 10:48:25', '2024-02-20 07:31:36', 1, NULL, '99b7227e12dd736682d11ec137c3e528', 1),
+(29, 'memen@cenah.co.id', 'memen', '$2y$10$LY1bytJe6.dlC7elOMVOoewhl1w9mFOUk/JQRy3jFtNYUB7vw6G/W', '2024-02-16 16:51:39', NULL, 1, NULL, NULL, 3),
+(31, 'rayfathur2006@gmail.com', 'Al.bv', '$2y$10$14hbF3Jn4Q.UKV2f0PU/rO/0ClKEvdkYf8mCrHWPQljEo6oE12G2.', '2024-02-20 14:45:19', '2024-02-20 08:46:43', 1, NULL, '619c3825257fd4feefaba0f0361e01a0', 9);
 
 -- --------------------------------------------------------
 
@@ -482,8 +494,9 @@ INSERT INTO `warga` (`id`, `nik`, `nama`, `phone`, `tempat_lahir`, `tanggal_lahi
 (1, '1234567890123456', 'Nefertari Vivi', '08127263127', 'Alabasta', '2015-02-18', 0, 'https://th.bing.com/th/id/OIP.JujkWRpIDSXcvF6EtGMoNAHaHa?rs=1&pid=ImgDetMain', 1, 'Bounty Hunter', 1, 9, '2024-02-09 16:27:30', NULL),
 (2, '9876543210987654', 'Trafalgar D. Water Law', '0193291238', 'North Blue', '2024-02-01', 1, 'https://th.bing.com/th/id/OIP.6vocep1638e8DtEILINSMgHaHE?rs=1&pid=ImgDetMain', 0, 'Swordsman', 3, 4, '2024-02-09 16:27:30', NULL),
 (3, '0099627128361940', 'Nami', '0823183821', 'Bandung', '2006-09-06', 0, 'https://th.bing.com/th/id/OIP.88Z6iVh1o5Un74m_09Qi6AHaHa?rs=1&pid=ImgDetMain', 1, 'Scientist', 2, 2, '2024-02-12 11:54:37', NULL),
-(4, '0039617128331340', 'Viola', '0829153821', 'Jakarta', '2006-12-06', 0, 'https://th.bing.com/th/id/OIP.dziVOTXRMK1zkPZsdE-UHQHaHD?rs=1&pid=ImgDetMain', 1, 'Balerian', 4, 10, '2024-02-12 11:59:12', NULL),
-(5, '1099627178341949', 'Roronoa Zoro', '0823183821', 'Papua', '2002-02-20', 1, 'storage/roronoa-zoro-20240216085117.jpg', 0, 'Pirates', 5, 11, '2024-02-12 11:59:12', NULL);
+(4, '0039617128331340', 'Viola', '0829153821', 'Jakarta', '2006-12-06', 0, 'storage/viola-20240220025532.jpg', 1, 'Balerian', 4, 3, '2024-02-12 11:59:12', NULL),
+(5, '1099627178341949', 'Roronoa Zoro', '0823183821', 'Papua', '2002-02-20', 1, 'storage/roronoa-zoro-20240216085117.jpg', 0, 'Pirates', 5, 11, '2024-02-12 11:59:12', NULL),
+(9, '1122334455667788', 'Muhammad D. Rayhan Fathurrakhman', '081224018624', 'bandung', '2024-02-20', 0, 'storage/muhammad-d-rayhan-fathurrakhman-20240220023550.jpg', 1, 'Pengusaha Sukses', 1, 12, '2024-02-20 13:35:50', NULL);
 
 --
 -- Indexes for dumped tables
@@ -523,8 +536,8 @@ ALTER TABLE `balasan`
 --
 ALTER TABLE `emergencies_log`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `user_id` (`user_id`),
-  ADD KEY `emergencies_log_ibfk_1` (`alamat_id`);
+  ADD KEY `emergencies_log_ibfk_1` (`alamat_id`),
+  ADD KEY `emergencies_log_ibfk_2` (`user_id`);
 
 --
 -- Indexes for table `jadwal_ronda`
@@ -538,14 +551,14 @@ ALTER TABLE `jadwal_ronda`
 --
 ALTER TABLE `login`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `user_id` (`user_id`);
+  ADD KEY `login_ibfk_1` (`user_id`);
 
 --
 -- Indexes for table `log_history`
 --
 ALTER TABLE `log_history`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `user_id` (`user_id`);
+  ADD KEY `log_history_ibfk_1` (`user_id`);
 
 --
 -- Indexes for table `posisi`
@@ -592,43 +605,43 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT for table `alamat`
 --
 ALTER TABLE `alamat`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `aspirasi`
 --
 ALTER TABLE `aspirasi`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `balasan`
 --
 ALTER TABLE `balasan`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `emergencies_log`
 --
 ALTER TABLE `emergencies_log`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `jadwal_ronda`
 --
 ALTER TABLE `jadwal_ronda`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `login`
 --
 ALTER TABLE `login`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=73;
 
 --
 -- AUTO_INCREMENT for table `log_history`
 --
 ALTER TABLE `log_history`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT for table `posisi`
@@ -640,19 +653,19 @@ ALTER TABLE `posisi`
 -- AUTO_INCREMENT for table `register`
 --
 ALTER TABLE `register`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- AUTO_INCREMENT for table `warga`
 --
 ALTER TABLE `warga`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- Constraints for dumped tables
@@ -676,7 +689,7 @@ ALTER TABLE `balasan`
 --
 ALTER TABLE `emergencies_log`
   ADD CONSTRAINT `emergencies_log_ibfk_1` FOREIGN KEY (`alamat_id`) REFERENCES `alamat` (`id`) ON DELETE SET NULL,
-  ADD CONSTRAINT `emergencies_log_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
+  ADD CONSTRAINT `emergencies_log_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE SET NULL;
 
 --
 -- Constraints for table `jadwal_ronda`
@@ -688,13 +701,13 @@ ALTER TABLE `jadwal_ronda`
 -- Constraints for table `login`
 --
 ALTER TABLE `login`
-  ADD CONSTRAINT `login_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
+  ADD CONSTRAINT `login_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `log_history`
 --
 ALTER TABLE `log_history`
-  ADD CONSTRAINT `log_history_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
+  ADD CONSTRAINT `log_history_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `register`
