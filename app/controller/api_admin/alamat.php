@@ -79,7 +79,7 @@ class Alamat extends JI_Controller
             'id' => ['required'],
             'rt' => ['required', 'max:3'],
             'no_rumah' => ['required', 'max:50'],
-            'kode_pos' => ['required', 'max:5', 'min:5']
+            'kode_pos' => ['required', 'max:5', 'min:4']
         ]);
         $id = $input['id'];
         if ($id == "" or $id == 0) {

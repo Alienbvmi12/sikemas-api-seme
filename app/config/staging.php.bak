@@ -1,6 +1,6 @@
 <?php
 /**
- * Configuration file for Staging version
+ * Configuration file for Development version
  *   You can create one for:
  *   development.php
  *   staging.php
@@ -13,7 +13,7 @@
 /****************************/
 
 /**
- * Base URL with http:// or https:// prefix and trailing slash
+ * Site Base URL with http:// or https:// prefix and trailing slash
  * @var string
  */
 $site = "http://".$_SERVER['HTTP_HOST']."/";
@@ -24,43 +24,44 @@ $site = "http://".$_SERVER['HTTP_HOST']."/";
  *   - ORIG_PATH_INFO
  * @var string
  */
-$sene_method = "PATH_INFO";//REQUEST_URI,PATH_INFO,ORIG_PATH_INFO,
+$method = "PATH_INFO";//REQUEST_URI,PATH_INFO,ORIG_PATH_INFO,
 /**
  * Admin Secret re-routing
  * this is alias for app/controller/admin/*
  * @var string
  */
-$admin_secret_url = 'adminmaster';
+$admin_secret_url = 'admin';
 /**
  * Base URL with http:// or https:// prefix and trailing slash
  * @var string
  */
-$cdn_url = "";
+$cdn_url = '';
 
 /********************************/
 /* == Database Configuration == */
 /* Database connection information */
 /* @var array of string */
 /********************************/
-$db['host']  = 'localhost';
-$db['user']  = 'root';
-$db['pass']  = '';
-$db['name']  = 'seme_framework';
+$db['host']  = 'sql310.infinityfree.com';
+$db['user']  = 'if0_35949519';
+$db['pass']  = 'QLZSkr0h98zpD';
+$db['name']  = 'if0_35949519_sikemas_db';
 $db['port'] = '3306';
-$db['charset'] = 'latin1';
+$db['charset'] = 'utf8mb4';
 $db['engine'] = 'mysqli';
+$db['enckey'] = '';
 
 /****************************/
 /* == Session Configuration == */
 /* @var string */
 /****************************/
-$saltkey = 'cenahMP$';
+$saltkey = 's3mEFr4u';
 
 /********************************/
 /* == Timezone Configuration == */
-/* @function string */
+/* @var string */
 /****************************/
-date_default_timezone_set('Asia/Jakarta');
+$timezone = 'Asia/Jakarta';
 
 /********************************/
 /* == Core Configuration == */
@@ -70,8 +71,8 @@ date_default_timezone_set('Asia/Jakarta');
 /* @var string */
 /****************************/
 $core_prefix = 'ji_';
-$core_controller = 'controller';
-$core_model = '';
+$core_controller = 'model';
+$core_model = 'controller';
 
 /********************************/
 /* == Controller Configuration == */
@@ -113,9 +114,36 @@ $semevar['fcm']->storageBucket = '';
 $semevar['fcm']->messagingSenderId = '';
 $semevar['fcm']->appId = '';
 
+//email
+$semevar['email_from'] = 'elektro1ktp@gmail.com';
+$semevar['email_reply'] = 'elektro1ktp@gmail.com';
+$semevar['email_host'] = "smtp.gmail.com";
+$semevar['email_password'] = "aiur idtd dbhg jfrl";
+$semevar['email_smtp_port'] = 465;
+
+//FTP
+
+$semevar['ftp_base_url'] = "http://sikemas.rf.gd/";
+$semevar['ftp_server'] = 'ftpupload.net';
+$semevar['ftp_user'] = 'if0_35949519';
+$semevar['ftp_pass'] = 'QLZSkr0h98zpD';
+
 // example
-$semevar['site_name'] = 'Seme Framework';
-$semevar['email_from'] = 'noreply@thecloudalert.com';
-$semevar['email_reply'] = 'hi@thecloudalert.com';
-$semevar['app_name'] = 'Seme Framework';
-$semevar['app_logo'] = 'Seme Framework';
+$semevar['site_version'] = '1.0.0';
+$semevar['site_name'] = 'Sikemas App';
+$semevar['site_title'] = 'Sikemas App';
+$semevar['site_title_suffix'] = ' - '.$semevar['site_title'];
+$semevar['admin_site_name'] = 'Administrator';
+$semevar['admin_site_title'] = 'Admin Sikemas App';
+$semevar['admin_site_title_suffix'] = ' - '.$semevar['admin_site_title'];
+$semevar['site_description'] = 'Sikemas App';
+$semevar['site_author'] = 'cenah.co.id';
+$semevar['site_logo'] = 'media/logo.png';
+$semevar['site_logo_white'] = 'media/logo-white.png';
+$semevar['site_keyword'] = 'sikemas-api.co';
+
+$semevar['app_name'] = $semevar['site_name'];
+$semevar['app_logo'] = 'media/logo.png';
+$semevar['media_pengguna'] = 'media/pengguna';
+//yayasan
+$semevar['id_yayasan'] = 1;

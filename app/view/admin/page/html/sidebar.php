@@ -7,31 +7,31 @@
                 Dashboard
             </a>
             <a class="nav-link <?= $active === 'user' ? "active" : "" ?>" href="<?= base_url_admin("user/") ?>">
-                <div class="sb-nav-link-icon"><i class="bi bi-bicycle"></i></div>
+                <div class="sb-nav-link-icon"><i class="bi bi-person-circle"></i></div>
                 Users
             </a>
             <a class="nav-link <?= $active === 'warga' ? "active" : "" ?>" href="<?= base_url_admin("warga/") ?>">
-                <div class="sb-nav-link-icon"><i class="bi bi-tags"></i></div>
+                <div class="sb-nav-link-icon"><i class="bi bi-people"></i></div>
                 Warga
             </a>
             <a class="nav-link <?= $active === 'alamat' ? "active" : "" ?>" href="<?= base_url_admin("alamat/") ?>">
-                <div class="sb-nav-link-icon"><i class="bi bi-bicycle"></i></div>
+                <div class="sb-nav-link-icon"><i class="bi bi-geo-alt"></i></div>
                 Alamat
             </a>
             <a class="nav-link <?= $active === 'ronda' ? "active" : "" ?>" href="<?= base_url_admin("ronda/") ?>">
-                <div class="sb-nav-link-icon"><i class="bi bi-bicycle"></i></div>
+                <div class="sb-nav-link-icon"><i class="bi bi-list-task"></i></div>
                 Jadwal Ronda
             </a>
             <a class="nav-link <?= $active === 'aspirasi' ? "active" : "" ?>" href="<?= base_url_admin("aspirasi/") ?>">
-                <div class="sb-nav-link-icon"><i class="bi bi-bicycle"></i></div>
+                <div class="sb-nav-link-icon"><i class="bi bi-envelope"></i></div>
                 Aspirasi
             </a>
             <a class="nav-link <?= $active === 'darurat' ? "active" : "" ?>" href="<?= base_url_admin("darurat/") ?>">
-                <div class="sb-nav-link-icon"><i class="bi bi-bicycle"></i></div>
+                <div class="sb-nav-link-icon"><i class="bi bi-hourglass"></i></div>
                 Histori Kejadian Darurat
             </a>
             <a class="nav-link <?= $active === 'log' ? "active" : "" ?>" href="<?= base_url_admin("log/") ?>">
-                <div class="sb-nav-link-icon"><i class="bi bi-bicycle"></i></div>
+                <div class="sb-nav-link-icon"><i class="bi bi-clock-history"></i></div>
                 Histori Log
             </a>
         </div>

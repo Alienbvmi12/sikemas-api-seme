@@ -43,13 +43,13 @@ class User_Model extends JI_Model
     private function filter_keyword($keyword)
     {
         if (strlen($keyword) > 0) {
-            $this->db->where("$this->tbl_as.idk", $keyword, "OR", "%like%", 1, 0);
+            $this->db->where("$this->tbl_as.id", $keyword, "OR", "%like%", 1, 0);
             $this->db->where("$this->tbl_as.email", $keyword, "OR", "%like%", 0, 0);
             $this->db->where("$this->tbl_as.username", $keyword, "OR", "%like%", 0, 0);
             $this->db->where("$this->tbl_as.created_at", $keyword, "OR", "%like%", 0, 0);
             $this->db->where("$this->tbl2_as.nama", $keyword, "OR", "%like%", 0, 0);
-            $this->db->where("$this->tbl2_as.telepon", $keyword, "OR", "%like%", 0, 0);
-            $this->db->where("$this->tbl2_as.no_rumah", $keyword, "OR", "%like%", 0, 1);
+            $this->db->where("$this->tbl2_as.phone", $keyword, "OR", "%like%", 0, 0);
+            $this->db->where("$this->tbl3_as.no_rumah", $keyword, "OR", "%like%", 0, 1);
         }
         return $this;
     }
@@ -91,6 +91,8 @@ class User_Model extends JI_Model
     {
         $this->db->from($this->tbl, $this->tbl_as);
         $this->db->select_as("COUNT(*)","count",0);
+        $this->db->join($this->tbl2, $this->tbl2_as, 'id', $this->tbl_as, 'warga_id', 'left');
+        $this->db->join($this->tbl3, $this->tbl3_as, 'id', $this->tbl2_as, 'alamat_id', 'left');
         $this->filter_keyword($q);
         return $this->db->get_first();
     }

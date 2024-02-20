@@ -34,6 +34,7 @@ class Warga_Model extends JI_Model
         "kewarganegaraan",
         "pekerjaan",
         "posisi",
+        "alamat",
         "id"
     ];
     public function __construct()

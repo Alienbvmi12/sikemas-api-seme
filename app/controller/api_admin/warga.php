@@ -236,8 +236,6 @@ class Warga extends JI_Controller
             $name_slug = $this->slugify($name_slug) . "-" . date("Ymdhis");
             $splited_filename = explode(".", basename($file["name"]));
             $name_slug = $name_slug . "." . end($splited_filename);
-        }
-        if (count($_FILES) > 0 or isset($_FILES['foto'])) {
             $dirr = str_replace("app\controller\api_admin", "storage\\", __DIR__) . $name_slug;
             move_uploaded_file($file['tmp_name'], $dirr);
             $input["foto"] = "storage/" . $name_slug;
