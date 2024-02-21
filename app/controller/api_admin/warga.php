@@ -129,7 +129,7 @@ class Warga extends JI_Controller
         }
         $input = $_POST;
         $this->warga->validate($input, $this, 'insert', [
-            'nik' => ['required', "min:16", "max:20", "min:16"],
+            'nik' => ['required', "min:16", "max:20", "min:16", "unique"],
             'nama' => ['required', "max:255"],
             'phone' => ['required', "min:9", "max:13"],
             'tempat_lahir' => ['required', "max:50"],
@@ -195,9 +195,9 @@ class Warga extends JI_Controller
         }
         $input = $_POST;
         $id = $input['id'];
-        $this->warga->validate($input, $this, 'insert', [
+        $this->warga->validate($input, $this, 'update', [
             'id' => ['required'],
-            'nik' => ['required', "min:16", "max:20", "min:16"],
+            'nik' => ['required', "min:16", "max:20", "min:16", 'unique'],
             'nama' => ['required', "max:255"],
             'phone' => ['required', "min:9", "max:13"],
             'tempat_lahir' => ['required', "max:50"],
