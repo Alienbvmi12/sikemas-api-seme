@@ -53,6 +53,7 @@ class Warga_Model extends JI_Model
             $this->db->where("$this->tbl_as.nik", $keyword, "OR", "%like%", 1, 0);
             $this->db->where("$this->tbl_as.phone", $keyword, "OR", "%like%", 0, 0);
             $this->db->where("$this->tbl_as.tempat_lahir", $keyword, "OR", "%like%", 0, 0);
+            $this->db->where("$this->tbl_as.pekerjaan", $keyword, "OR", "%like%", 0, 0);
             $this->db->where("$this->tbl_as.nama", $keyword, "AND", "%like%", 0, 1);
         }
         return $this;

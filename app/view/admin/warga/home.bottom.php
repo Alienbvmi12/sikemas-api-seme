@@ -154,6 +154,7 @@
                     $("#pekerjaan").val(response.data.pekerjaan);
                     $("#posisi_id").val(response.data.posisi_id);
                     $("#alamat_id").val(response.data.alamat_id);
+                    document.getElementById("foto").parentNode.innerHTML = `<input type="file" class="form-control mb-3" id="foto" name="foto" accept="image" required>`;
                     NProgress.done();
                 },
                 error: function(xhr, status, error) {
@@ -172,9 +173,7 @@
             $("#pekerjaan").val("");
             $("#posisi_id").val("");
             $("#alamat_id").val("");
-            document.getElementById("foto").files = {
-                length: 0
-            };
+            document.getElementById("foto").parentNode.innerHTML = `<input type="file" class="form-control mb-3" id="foto" name="foto" accept="image" required>`;
         }
     }
 

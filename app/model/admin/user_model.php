@@ -28,6 +28,7 @@ class User_Model extends JI_Model
         "username",
         "email",
         "warga",
+        "created_at",
         "id"
     ];
     public function __construct()

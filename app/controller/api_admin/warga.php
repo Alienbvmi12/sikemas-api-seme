@@ -137,8 +137,8 @@ class Warga extends JI_Controller
             'kelamin' => ['required'],
             'kewarganegaraan' => ['required'],
             'pekerjaan' => ['required', "max:255"],
-            'posisi_id' => ['required'],
-            'alamat_id' => ['required'],
+            'posisi_id' => ['required', "as:posisi"],
+            'alamat_id' => ['required', "as:alamat"],
         ]);
         if ($input['nama'] == "") {
             $this->status = 400;
@@ -147,7 +147,7 @@ class Warga extends JI_Controller
             return;
         }
         $image_name = "";
-        if (count($_FILES) > 0 or isset($_FILES['foto'])) {
+        if (count($_FILES) > 0 AND $_FILES['foto']['name'] != "") {
             // $conn = $this->__connect_to_ftp();
             // if ($conn == false) {
             //     $this->status = 408;
@@ -205,8 +205,8 @@ class Warga extends JI_Controller
             'kelamin' => ['required'],
             'kewarganegaraan' => ['required'],
             'pekerjaan' => ['required', "max:255"],
-            'posisi_id' => ['required'],
-            'alamat_id' => ['required'],
+            'posisi_id' => ['required', "as:posisi"],
+            'alamat_id' => ['required', "as:alamat"],
         ]);
         if ($id == "" or $id == 0) {
             $this->status = 400;

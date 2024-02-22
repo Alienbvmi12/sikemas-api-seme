@@ -54,7 +54,7 @@ class Ronda extends JI_Controller
         $input = $_POST;
         $this->ronda->validate($input, $this, 'insert', [
             'hari' => ['required'],
-            'warga_id' => ['required']
+            'warga_id' => ['required', "as:warga"]
         ]);
         $res = $this->ronda->create($input);
         $this->status = 200;

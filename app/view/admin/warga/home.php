@@ -73,7 +73,9 @@
                                 ?>
                             </select>
                             <label>Foto</label>
-                            <input type="file" class="form-control mb-3" id="foto" name="foto" accept="image" required>
+                            <div>
+                                <input type="file" class="form-control mb-3" id="foto" name="foto" accept="image" required>
+                            </div>
                         </div>
                     </div>
                 </form>

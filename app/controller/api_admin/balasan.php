@@ -45,8 +45,8 @@ class Balasan extends JI_Controller
         $this->balasan->validate($input, $this, 'insert', [
             'aspirasi_id' => ['required'],
             'pengguna_id' => ['required'],
-            'title' => ['required', 'max:50'],
-            'pesan' => ['required', "min:5"]
+            'title' => ['required', 'max:50', "as:Judul/Subjek"],
+            'pesan' => ['required', "min:5", "as:Pesan Balasan"]
         ]);
         $res = $this->balasan->create($input);
         $this->status = 200;

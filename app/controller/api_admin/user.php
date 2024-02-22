@@ -56,9 +56,9 @@ class User extends JI_Controller
         $this->user->validate($input, $this, 'insert', [
             'email' => ['required', 'max:50', 'email', "unique"],
             'username' => ['required', 'max:50', "unique"],
-            'warga_id' => ['required'],
+            'warga_id' => ['required', "as:Warga"],
             'password' => ['required', 'min:6', 'max:50'],
-            'confirm_password' => ['required', 'min:6', 'max:50']
+            'confirm_password' => ['required', 'min:6', 'max:50', 'as:Konfirmasi Password']
         ]);
 
         if ($input['password'] != $input['confirm_password']) {
@@ -101,7 +101,7 @@ class User extends JI_Controller
             if ($input['password'] != "" or $input['confirm_password'] != "") {
                 $this->user->validate($input, $this, 'update', [
                     'password' => ['required', 'min:6', 'max:50'],
-                    'confirm_password' => ['required', 'min:6', 'max:50']
+                    'confirm_password' => ['required', 'min:6', 'max:50', "as:Konfirmasi Password"]
                 ]);
                 if ($input['password'] != $input['confirm_password']) {
                     $this->status = 400;
